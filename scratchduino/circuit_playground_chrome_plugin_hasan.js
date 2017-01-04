@@ -132,7 +132,7 @@
 
     function setNeopixel(lednum,hex){
 
-    	var color = hexToRgb(hexArray[i]);
+    	var color = hexToRgb(hex);
 
  		hPort.postMessage({
         	message: "O".charCodeAt(0),
