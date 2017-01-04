@@ -149,7 +149,7 @@
 
 		for(var i=0;i<hexArray.length;i++){
 
-			hex = hexArray[i]);
+			hex = hexArray[i];
 
 			if(isOff(hex){
 				offs++;
@@ -161,7 +161,7 @@
 			}
 		}
 
-		
+
     }
 
 
