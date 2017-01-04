@@ -132,7 +132,7 @@
 
     	for(var i=0;i<colors.length;i++){
 
-    		setTimeout(function(hext){
+    		setTimeout(function(hex){
 
 		        hPort.postMessage({
 		        	message: "O".charCodeAt(0),
@@ -146,7 +146,7 @@
 
     	}
 
-    	
+
 
     }
 
