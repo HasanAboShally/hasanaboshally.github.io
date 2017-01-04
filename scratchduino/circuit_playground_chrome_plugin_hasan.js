@@ -126,13 +126,12 @@
     };
 
 
-    ext.smile = function(){
-        
-    	var colors = ["#0000ff","#000000","#ffff00","#ffff00","#ffff00","#ffff00","#ffff00","#ffff00","#000000","#0000ff"];
 
-    	for(var i=0;i<colors.length;i++){
+    function setNeopixels(hexArray, interval){
 
-    		setTimeout(function(lednum, hex){
+		for(var i=0;i<hexArray.length;i++){
+
+			setTimeout(function(lednum, hex){
 
 		        hPort.postMessage({
 		        	message: "O".charCodeAt(0),
@@ -142,12 +141,18 @@
 		        	blue: hex.b
 		    		});
 
-		    }, (i*200), i, hexToRgb(colors[i]))
+		    }, (i*interval), i, hexToRgb(hexArray[i]))
 
-    	}
+		}
+    }
 
 
+    ext.turnOffNeopixels = function(){
+    	setNeopixels(["#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000"],0);
+    }
 
+    ext.smile = function(){
+    	setNeopixels(["#0000ff","#000000","#ffff00","#ffff00","#ffff00","#ffff00","#ffff00","#ffff00","#000000","#0000ff"],200);
     }
 
 	
@@ -591,7 +596,8 @@
         blocks: [
 			['b', "Touch sensor %m.cap_s touched?", "getCap", 0],
 			[' ', "Set Neopixel Ring %m.ten to %m.colors", "setRingLed", '1', 'Red'],
-			[' ', "smile", "smile"],
+			[' ', "Smile", "smile"],
+			[' ', "Turn Neopixels Off", "turnOffNeopixels"],
 			[' ', "Set Neopixel Matrix Row %m.row_s to %m.colors", "setRowLed", 1, 'Red'],
 			[' ', "Set Neopixel Matrix Column %m.col_s to %m.colors", "setColLed", 1, 'Green'],
 			[' ', "Set Neopixel Matrix Pixel %m.row_s %m.col_s to %m.colors", "setPixLed", 1, 1, 'Blue'],
