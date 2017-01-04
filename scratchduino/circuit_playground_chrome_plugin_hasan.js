@@ -132,16 +132,20 @@
 
     	for(var i=0;i<colors.length;i++){
 
-    		var hex = hexToRgb(colors[i]);
+    		
 
     		setTimeout(function(){
-			        hPort.postMessage({
-		            message: "O".charCodeAt(0),
-		            lednum: i,
+
+    			var hex = hexToRgb(colors[i]);
+
+		        hPort.postMessage({
+		        	message: "O".charCodeAt(0),
+					lednum: i,
 		            red: hex.r,
 		            green: hex.g,
 		        	blue: hex.b
-		    	})};
+		    		});
+
 		    }, (i*200))
 
     	}
