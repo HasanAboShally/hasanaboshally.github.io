@@ -128,23 +128,26 @@
 
     ext.smile = function(){
         
-    	var colors = ["#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000"];
+    	var colors = ["#0000ff","#000000","#ffff00","#ffff00","#ffff00","#ffff00","#ffff00","#ffff00","#000000","#0000ff"];
 
     	for(var i=0;i<colors.length;i++){
 
     		var hex = hexToRgb(colors[i]);
 
-	        hPort.postMessage({
-	            message: "O".charCodeAt(0),
-	            lednum: 1,
-	            red: hex.r,
-	            green: hex.g,
-            	blue: hex.b
-        	});
+    		setTimeout(function(){
+			        hPort.postMessage({
+		            message: "O".charCodeAt(0),
+		            lednum: i,
+		            red: hex.r,
+		            green: hex.g,
+		        	blue: hex.b
+		    	});
+		    }, (i*200))
+
     	}
 
     }
-    
+
 	
 	ext.setRowLed = function (lednum, color) {
         var realPort = 1 - 1; //convert from zero-indexed
