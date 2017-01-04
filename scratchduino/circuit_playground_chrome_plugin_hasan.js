@@ -147,7 +147,7 @@
 
 		var offs = 0;
 
-		for(var i=0;i<hexArray.length;i++){
+		for(var i=0 ; i<hexArray.length ; i++){
 
 			hex = hexArray[i];
 
@@ -614,8 +614,8 @@
         blocks: [
 			['b', "Touch sensor %m.cap_s touched?", "getCap", 0],
 			[' ', "Set Neopixel Ring %m.ten to %m.colors", "setRingLed", '1', 'Red'],
-			[' ', "Smile", "smile"],
-			[' ', "Turn Neopixels Off", "turnOffNeopixels"],
+			[' ', "miLAB: Smile", "smile"],
+			[' ', "miLAB: Turn Neopixels Off", "turnOffNeopixels"],
 			[' ', "Set Neopixel Matrix Row %m.row_s to %m.colors", "setRowLed", 1, 'Red'],
 			[' ', "Set Neopixel Matrix Column %m.col_s to %m.colors", "setColLed", 1, 'Green'],
 			[' ', "Set Neopixel Matrix Pixel %m.row_s %m.col_s to %m.colors", "setPixLed", 1, 1, 'Blue'],
