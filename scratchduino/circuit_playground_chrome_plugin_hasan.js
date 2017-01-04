@@ -126,25 +126,39 @@
     };
 
 
+    function isOff(hex){
+    	return hex == "#000000";
+    }
+
+    function setNeopixel(lednum,hex){
+
+    	var color = hexToRgb(hexArray[i]);
+
+ 		hPort.postMessage({
+        	message: "O".charCodeAt(0),
+			lednum: lednum,
+            red: color.r,
+            green: color.g,
+        	blue: color.b
+		});
+    }
 
     function setNeopixels(hexArray, interval){
 
+		var offs = 0;
+
 		for(var i=0;i<hexArray.length;i++){
 
-			var _interval = (hexArray[i] == "#000000") ? 0 : ((i+1)*interval); // no interval if black (turning the led off)
-			var _color = hexToRgb(hexArray[i]);
+			hex = hexArray[i]);
 
-			setTimeout(function(lednum, hex){
-
-		        hPort.postMessage({
-		        	message: "O".charCodeAt(0),
-					lednum: lednum,
-		            red: hex.r,
-		            green: hex.g,
-		        	blue: hex.b
-		    		});
-
-		    }, _interval, i, _color);
+			if(isOff(hex){
+				offs++;
+				setNeopixel(i,hex);
+			}
+			else{
+				var _interval = (i+1-offs) * interval; // wait interval also before the first led
+				setTimeout(setNeopixel, _interval, i, hex);
+			}
 		}
     }
 
