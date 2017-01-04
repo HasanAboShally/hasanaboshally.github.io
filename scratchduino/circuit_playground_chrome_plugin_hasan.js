@@ -151,7 +151,7 @@
 
 			hex = hexArray[i];
 
-			if(isOff(hex){
+			if(isOff(hex)){
 				offs++;
 				setNeopixel(i,hex);
 			}
