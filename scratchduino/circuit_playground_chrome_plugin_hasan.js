@@ -127,22 +127,22 @@
 
 
     ext.smile = function(){
-        var report = [{
-		            message: "O".charCodeAt(0),
-		            lednum: 1,
-		            red: 255,
-		            green: 0,
-		            blue: 0
-	        	},
-	        	{	
-		            message: "O".charCodeAt(0),
-		            lednum: 2,
-		            red: 0,
-		            green: 255,
-		            blue: 0
-	        	}
-        ];
-        hPort.postMessage(report);
+        
+    	var colors = ["#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000"];
+
+    	for(var i=0;i<colors.lentgh;i++){
+
+    		var hex = hexToRgb(colors[i]);
+
+	        hPort.postMessage({
+	            message: "O".charCodeAt(0),
+	            lednum: 1,
+	            red: hex.r,
+	            green: hex.g,
+            	blue: hex.b
+        	});
+    	}
+
     }
 	
 	ext.setRowLed = function (lednum, color) {
