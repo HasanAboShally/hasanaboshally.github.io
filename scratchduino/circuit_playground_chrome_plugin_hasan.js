@@ -131,9 +131,8 @@
 
 		for(var i=0;i<hexArray.length;i++){
 
-			if(hexArray[i] == "#000000") // skip if black
-				continue;
-
+			var _interval = (hexArray[i] == "#000000") ? 0 : (i+1)*interval) // no interval if black (turning the led off)
+				
 			setTimeout(function(lednum, hex){
 
 		        hPort.postMessage({
@@ -144,7 +143,7 @@
 		        	blue: hex.b
 		    		});
 
-		    }, ((i+1)*interval), i, hexToRgb(hexArray[i]))
+		    }, _interval, i, hexToRgb(hexArray[i]))
 
 		}
     }
