@@ -126,14 +126,22 @@
     };
 
 
-    ext.setRedLed = function(){
-        var report = {
-            message: "O".charCodeAt(0),
-            lednum: 1,
-            red: 255,
-            green: 0,
-            blue: 0
-        };
+    ext.smile = function(){
+        var report = [{
+		            message: "O".charCodeAt(0),
+		            lednum: 1,
+		            red: 255,
+		            green: 0,
+		            blue: 0
+	        	},
+	        	{	
+		            message: "O".charCodeAt(0),
+		            lednum: 2,
+		            red: 0,
+		            green: 255,
+		            blue: 0
+	        	}
+        ];
         hPort.postMessage(report);
     }
 	
@@ -577,7 +585,7 @@
         blocks: [
 			['b', "Touch sensor %m.cap_s touched?", "getCap", 0],
 			[' ', "Set Neopixel Ring %m.ten to %m.colors", "setRingLed", '1', 'Red'],
-			[' ', "Set Ring 1 to RED", "setRedLed"],
+			[' ', "smile", "smile"],
 			[' ', "Set Neopixel Matrix Row %m.row_s to %m.colors", "setRowLed", 1, 'Red'],
 			[' ', "Set Neopixel Matrix Column %m.col_s to %m.colors", "setColLed", 1, 'Green'],
 			[' ', "Set Neopixel Matrix Pixel %m.row_s %m.col_s to %m.colors", "setPixLed", 1, 1, 'Blue'],
