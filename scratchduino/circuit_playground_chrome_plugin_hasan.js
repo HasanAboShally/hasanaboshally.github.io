@@ -160,6 +160,8 @@
 				setTimeout(setNeopixel, _interval, i, hex);
 			}
 		}
+
+		
     }
 
 
