@@ -130,7 +130,7 @@
         
     	var colors = ["#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000"];
 
-    	for(var i=0;i<colors.lentgh;i++){
+    	for(var i=0;i<colors.length;i++){
 
     		var hex = hexToRgb(colors[i]);
 
@@ -144,6 +144,7 @@
     	}
 
     }
+    
 	
 	ext.setRowLed = function (lednum, color) {
         var realPort = 1 - 1; //convert from zero-indexed
