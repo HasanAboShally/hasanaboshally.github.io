@@ -141,7 +141,7 @@
 		            red: hex.r,
 		            green: hex.g,
 		        	blue: hex.b
-		    	});
+		    	})};
 		    }, (i*200))
 
     	}
