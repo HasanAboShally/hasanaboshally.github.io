@@ -132,7 +132,8 @@
 
     	for(var i=0;i<colors.length;i++){
 
-    		
+    		alert(i);
+    		console.log(i, colors[i]);
 
     		setTimeout(function(){
 
