@@ -132,12 +132,7 @@
 
     	for(var i=0;i<colors.length;i++){
 
-    		alert(i);
-    		console.log(i, colors[i]);
-
-    		setTimeout(function(){
-
-    			var hex = hexToRgb(colors[i]);
+    		setTimeout(function(hext){
 
 		        hPort.postMessage({
 		        	message: "O".charCodeAt(0),
@@ -147,7 +142,7 @@
 		        	blue: hex.b
 		    		});
 
-		    }, (i*200))
+		    }, (i*200), hexToRgb(colors[i]))
 
     	}
 
