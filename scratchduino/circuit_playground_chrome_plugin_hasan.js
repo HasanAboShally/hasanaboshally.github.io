@@ -145,7 +145,6 @@
 		    		});
 
 		    }, _interval, i, _color);
-
 		}
     }
 
