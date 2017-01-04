@@ -136,7 +136,7 @@
 
 		        hPort.postMessage({
 		        	message: "O".charCodeAt(0),
-					lednum: i,
+					lednum: lednum,
 		            red: hex.r,
 		            green: hex.g,
 		        	blue: hex.b
