@@ -132,7 +132,7 @@
 
     	for(var i=0;i<colors.length;i++){
 
-    		setTimeout(function(hex){
+    		setTimeout(function(lednum, hex){
 
 		        hPort.postMessage({
 		        	message: "O".charCodeAt(0),
@@ -142,7 +142,7 @@
 		        	blue: hex.b
 		    		});
 
-		    }, (i*200), hexToRgb(colors[i]))
+		    }, (i*200), i, hexToRgb(colors[i]))
 
     	}
 
