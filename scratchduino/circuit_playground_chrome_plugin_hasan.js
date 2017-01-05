@@ -631,6 +631,13 @@
 
     };
 
+
+    ext.whenDark = function () {
+    		return (sensorvalue[4] < 20);
+    };
+
+
+
 	/*Capsense x4	0-3
 	Light			4
 	Microphone		5
@@ -644,6 +651,8 @@
         blocks: [
 			[' ', "miLAB: Smile", "smile"],
 			[' ', "miLAB: Turn Neopixels Off", "turnOffNeopixels"],
+            ['h', 'when dark', 'whenDark'],
+
 			['b', "Touch sensor %m.cap_s touched?", "getCap", 0],
 			[' ', "Set Neopixel Ring %m.ten to %m.colors", "setRingLed", '1', 'Red'],
 			[' ', "Set Neopixel Matrix Row %m.row_s to %m.colors", "setRowLed", 1, 'Red'],
