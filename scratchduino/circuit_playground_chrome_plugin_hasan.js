@@ -610,8 +610,6 @@
     	}
     }
 
-
-
     ext._getStatus = function () {
         var currStatus = hStatus;
 
@@ -632,8 +630,6 @@
         }
 
     };
-
-    
 
 	/*Capsense x4	0-3
 	Light			4
