@@ -632,7 +632,7 @@
     };
 
 
-    ext.whenDark = function () {
+    ext.isDark = function () {
     		return (sensorvalue[4] < 20);
     };
 
@@ -651,7 +651,7 @@
         blocks: [
 			[' ', "miLAB: Smile", "smile"],
 			[' ', "miLAB: Turn Neopixels Off", "turnOffNeopixels"],
-            ['h', 'when dark', 'whenDark'],
+            ['r', 'is dark', 'isDark'],
 
 			['b', "Touch sensor %m.cap_s touched?", "getCap", 0],
 			[' ', "Set Neopixel Ring %m.ten to %m.colors", "setRingLed", '1', 'Red'],
