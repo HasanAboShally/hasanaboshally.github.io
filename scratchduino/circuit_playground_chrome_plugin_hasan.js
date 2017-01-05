@@ -612,19 +612,23 @@
 
     ext._getStatus = function () {
         var currStatus = hStatus;
-        if (currStatus === 2)
-            return {status: 2, msg: 'Connected'};
-        else{
-	        	if (currStatus === 1){
-	        		appConnected();
+
+        switch(currStatus){
+			case 1:
+					appConnected();
 	           	    return {status: 1, msg: 'Circuit Playground Not Connected'};
-	        	}
-	            else
-	            {
-	        		appNotConnected();
+					break;
+			case 2:
+					appConnected();
+	           	    return {status: 2, msg: 'Connected'};
+					break;
+			default:
+				{
+					appNotConnected();
 	            	return {status: 1, msg: 'Chrome App Not Connected'};
-	            }
-         }
+				}
+        }
+
     };
 
 	/*Capsense x4	0-3
