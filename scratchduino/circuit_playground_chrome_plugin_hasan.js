@@ -651,7 +651,7 @@
         blocks: [
 			[' ', "miLAB: Smile", "smile"],
 			[' ', "miLAB: Turn Neopixels Off", "turnOffNeopixels"],
-            ['r', 'is dark', 'isDark'],
+            ['b', 'dark?', 'isDark'],
 
 			['b', "Touch sensor %m.cap_s touched?", "getCap", 0],
 			[' ', "Set Neopixel Ring %m.ten to %m.colors", "setRingLed", '1', 'Red'],
