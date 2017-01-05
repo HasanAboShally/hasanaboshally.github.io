@@ -592,6 +592,14 @@
         hPort.postMessage(report);
     };
 
+
+
+    function appNotConnected(){
+        	var elm = document.createElement("div");
+			elm.innerHTML = '<div id="app-not-connected-popup" style="position:fixed;top:0;right:0;bottom:0;left:0;background:red">App Not Connected</div>';
+			document.body.appendChild(elm);
+    }
+
     ext._getStatus = function () {
         var currStatus = hStatus;
         if (currStatus === 2)
@@ -599,7 +607,10 @@
         else if (currStatus === 1)
             return {status: 1, msg: 'Circuit Playground Not Connected'};
         else
+        {
+        	appNotConnected();
             return {status: 1, msg: 'Chrome App Not Connected'};
+        }
     };
 
 	/*Capsense x4	0-3
