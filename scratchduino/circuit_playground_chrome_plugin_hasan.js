@@ -603,12 +603,14 @@
 
     function appConnected(){
 
-    	var elm = document.getElementById('app-not-connected-popup');
+    	var elem = document.getElementById('app-not-connected-popup');
 
-    	if(elm){
+    	if(elem){
     		elem.parentNode.removeChild(elem);
     	}
     }
+
+
 
     ext._getStatus = function () {
         var currStatus = hStatus;
@@ -630,6 +632,8 @@
         }
 
     };
+
+    
 
 	/*Capsense x4	0-3
 	Light			4
