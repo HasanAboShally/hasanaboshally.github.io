@@ -596,8 +596,20 @@
 
     function appNotConnected(){
         	var elm = document.createElement("div");
-			elm.innerHTML = '<div id="app-not-connected-popup" style="position:fixed;top:0;right:0;bottom:0;left:0;background:red">App Not Connected</div>';
+        	elm.setAttribute("id","app-not-connected-popup");
+			elm.innerHTML = '<div style="position:fixed;top:0;right:0;bottom:0;left:0;background:red;display: flex; justify-content: center; align-items: center;">
+				<div style="color:white; font-size:300%;">App Not Connected</div>
+			</div>';
 			document.body.appendChild(elm);
+    }
+
+    function appConnected(){
+
+    	var elm = document.getElementById('app-not-connected-popup');
+
+    	if(elm){
+    		elem.parentNode.removeChild(elem);
+    	}
     }
 
     ext._getStatus = function () {
@@ -605,6 +617,7 @@
         if (currStatus === 2)
             return {status: 2, msg: 'Connected'};
         else if (currStatus === 1)
+        	appConnected();
             return {status: 1, msg: 'Circuit Playground Not Connected'};
         else
         {
