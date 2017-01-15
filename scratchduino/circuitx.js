@@ -666,7 +666,7 @@
             [' ', 'play rainbow', 'mock'],
             [' ', 'turn all leds off', 'mock'],
             [' ', 'turn led %m.leds leds off', 'mock', 1],
-            [' ', 'set led %m.leds to %c', 'mock', 1],
+            [' ', 'set led %n to %c', 'mock', 1,1],
             ['b', 'noise?', 'mock'],
             ['b', 'dark?', 'mock'],
             //['b', 'tilted %m.tilt_directions ?', 'mock','left'],
