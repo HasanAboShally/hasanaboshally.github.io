@@ -604,7 +604,7 @@
         if (elementExists('#app-not-connected-popup'))
             return;
 
-        $('body').append("<div style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:red;display: flex; justify-content: center; align-items: center;\'>\n    <div style=\'color:white; font-size:300%;\'>\n        App Not Connected\n\n\n      Pleae install  <a href=\'https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf\' target=\'_blank\'>THIS PLUGIN</a>, run it and check back here.\n        \n    </div>\n</div>");
+        $('body').append("<div id=\'app-not-connected-popup\'\n     style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(0,0,0,0.75);display: flex; justify-content: center; align-items: center;\'>\n    \n    \n    <div style=\'color:white; font-size:300%;\'>\n        App Not Connected\n        \n        <br/>\n        \n\n\n      Please install/lunch  <a href=\'https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf\' target=\'_blank\'>THIS APP</a>, check back here.\n        \n    </div>\n</div>");
     }
 
     function appConnected() {
