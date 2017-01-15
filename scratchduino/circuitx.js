@@ -671,14 +671,14 @@
             [' ', 'set led %n to %c', 'mock', 1, 'ff0000'],
             ['b', 'noise?', 'mock'],
             ['b', 'dark?', 'mock'],
-            ['b', 'tilted %m.tilt_directions ?', 'mock', 'left'],
+            //['b', 'tilted %m.tilt_directions ?', 'mock', 'left'],
             ['b', 'shaken?', 'mock']
         ],
         menus: {
             //loudness:['noisy','silent'],
             //brightness:['dark','light'],
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            tilt_directions: ['left', 'right'],
+            //tilt_directions: ['left', 'right'],
             digital: ['on', 'off']
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
@@ -717,7 +717,7 @@
 
     var descriptor = {
         blocks: root_level.blocks.concat(current_level.blocks),
-        menus: current_level.menus,//Object.assign({}, root_level.menus, current_level.menus ),
+        menus: Object.assign({}, root_level.menus, current_level.menus ),
         url: current_level.url
     };
 
