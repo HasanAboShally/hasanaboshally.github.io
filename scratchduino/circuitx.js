@@ -725,9 +725,7 @@
         url: current_level.url
     };
 
-
     getCircuitPlaygroundStatus();
     ScratchExtensions.register('Circuit Playground', descriptor, ext);
-
 
 })({});
