@@ -657,7 +657,7 @@
         id:"0",
         blocks:[
             ['h', 'when %b', 'mock', '']
-            ['b', 'button %m.buttons pressed', 'mock', 'on']
+                ['b', 'button %m.buttons pressed', 'mock', 'on']
         ],
         menus:{
             buttons: [1, 2]
@@ -721,7 +721,7 @@
 
     var descriptor = {
         blocks: root_level.blocks.concat(current_level.blocks),
-        menus: Object.assign({}, root_level.menus, current_level.menus ),
+        menus: current_level.menus,//Object.assign({}, root_level.menus, current_level.menus ),
         url: current_level.url
     };
 
