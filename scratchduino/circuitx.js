@@ -611,7 +611,7 @@
     function appNotConnected() {
         var elm = document.createElement("div");
         elm.setAttribute("id", "app-not-connected-popup");
-        elm.innerHTML = "<div style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:red;display: flex; justify-content: center; align-items: center;\'>\n    <div style=\'color:white; font-size:300%;\'>\n        App Not Connected\n\n\n        <button onclick=\"chrome.webstore.install()\" id=\"install-button\">Add to Chrome</button>\n        \n    </div>\n</div>";
+        elm.innerHTML = "<div style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:red;display: flex; justify-content: center; align-items: center;\'>\n    <div style=\'color:white; font-size:300%;\'>\n        App Not Connected\n\n\n        <button onclick=\"installPlugin()\" id=\"install-button\">Add to Chrome</button>\n        \n    </div>\n</div>";
         document.body.appendChild(elm);
     }
 
