@@ -646,94 +646,49 @@
 	Switch			9 
 	Acc x3			10,11,12
 	*/
+    var descriptor = {
 
+        blocks: [
+			[' ', "miLAB: Smile", "smile"],
+			[' ', "miLAB: Turn Neopixels Off", "turnOffNeopixels"],
+            ['b', 'dark?', 'isDark'],
 
-	// b = bolean
-    // ' ' =
-
-    function mock(){
-        return false;
-    }
-
-
-    var levels = [{
-        id:"1",
-        blocks:[
-            ['h', 'when %b','mock',''],
-            ['b', 'button %m.binary ?', 'mock', 'on'],
-            ['b', 'shaken ?', 'mock'],
-            ['b', '%m.noise ?', 'mock','noisy'],
-            ['b', '%m.light ?', 'mock','light'],
-            ['b', 'tilted %m.tilt_directions ?', 'mock','noisy'],
-            ['b', 'shaken ?', 'mock'],
-            [' ', 'play rainbow','mock'],
-            [' ', 'turn leds off','mock'],
-            [' ', 'set let %m.leds to %c','mock',1],
-            ['h', 'when shaken','mock']
+			['b', "Touch sensor %m.cap_s touched?", "getCap", 0],
+			[' ', "Set Neopixel Ring %m.ten to %m.colors", "setRingLed", '1', 'Red'],
+			[' ', "Set Neopixel Matrix Row %m.row_s to %m.colors", "setRowLed", 1, 'Red'],
+			[' ', "Set Neopixel Matrix Column %m.col_s to %m.colors", "setColLed", 1, 'Green'],
+			[' ', "Set Neopixel Matrix Pixel %m.row_s %m.col_s to %m.colors", "setPixLed", 1, 1, 'Blue'],
+			[' ', "Set Full Neopixel Matrix to %m.colors", "setFullLed", 'Off'],
+            [' ', "Turn LED %m.binary_s", "setLed", 'On'],
+			[' ', "%m.servo_s Servo %m.push_s", "setupServo", 'Start', 1],
+            [' ', "Set Servo %m.push_s angle to %n", "setServo", 1, 90],
+			['r', "Get Light Brightness", "getLight"],
+            ['r', "Get Board Temperature in %m.temp_s", "getTemp", '°F'],
+            ['r', "Get Microphone Loudness", "getSound"],
+			['r', "Get Accelerometer %m.acc_s axis", "getAcc", 'x'],
+			['b', "Pushbutton %m.push_s pushed?", "getPush", 1],
+			['b', "Switch on?", "getSwitch"],
+			['r', "Map value: %n to range %n - %n", "mapVal", 127, -180,180],
+            ['r', "Debug value on port %m.debug_s", "getRaw", 1]
         ],
-        menus:{
-            noise:['noisy','silent'],
-            light:['dark','light'],
-            leds: [1,2,3,4,5,6,7,8,9,10],
-            tilt_directions: ['left','right'],
-            binary:['on','off']
+        menus: {
+            port: ['1', '2', '3', '4'],
+			cap_s: [0,1,2,3],
+			acc_s: ['x','y','z'],
+			push_s: [1,2],
+			debug_s: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,18,19,20,21,22,29,30,31,32],
+            two: ['1', '2'],
+			ten: [1,2,3,4,5,6,7,8,9,10],
+			row_s: [1,2,3,4,5,6,7,8],
+			col_s: [1,2,3,4,5],
+			colors: ['Red','Green','Blue','Orange','Yellow','Violet', 'Teal','White', 'Off '],
+			servo_s: ['Start','Stop'],
+			coor_s: ['x','y'],
+			temp_s: ['°F', '°C'],
+			binary_s: ['On','Off']
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
-    }];
-
-    var current_level  = levels[0];
-
-    var descriptor = {
-        blocks : current_level.blocks,
-        menus : current_level.menus,
-        url : current_level.url
     };
-
-    //var descriptor = {
-    //
-    //    blocks: [
-		//	[' ', "miLAB: Smile", "smile"],
-		//	[' ', "miLAB: Turn Neopixels Off", "turnOffNeopixels"],
-    //        ['b', 'dark?', 'isDark'],
-    //
-		//	['b', "Touch sensor %m.cap_s touched?", "getCap", 0],
-		//	[' ', "Set Neopixel Ring %m.ten to %m.colors", "setRingLed", '1', 'Red'],
-		//	[' ', "Set Neopixel Matrix Row %m.row_s to %m.colors", "setRowLed", 1, 'Red'],
-		//	[' ', "Set Neopixel Matrix Column %m.col_s to %m.colors", "setColLed", 1, 'Green'],
-		//	[' ', "Set Neopixel Matrix Pixel %m.row_s %m.col_s to %m.colors", "setPixLed", 1, 1, 'Blue'],
-		//	[' ', "Set Full Neopixel Matrix to %m.colors", "setFullLed", 'Off'],
-    //        [' ', "Turn LED %m.binary_s", "setLed", 'On'],
-		//	[' ', "%m.servo_s Servo %m.push_s", "setupServo", 'Start', 1],
-    //        [' ', "Set Servo %m.push_s angle to %n", "setServo", 1, 90],
-		//	['r', "Get Light Brightness", "getLight"],
-    //        ['r', "Get Board Temperature in %m.temp_s", "getTemp", '°F'],
-    //        ['r', "Get Microphone Loudness", "getSound"],
-		//	['r', "Get Accelerometer %m.acc_s axis", "getAcc", 'x'],
-		//	['b', "Pushbutton %m.push_s pushed?", "getPush", 1],
-		//	['b', "Switch on?", "getSwitch"],
-		//	['r', "Map value: %n to range %n - %n", "mapVal", 127, -180,180],
-    //        ['r', "Debug value on port %m.debug_s", "getRaw", 1]
-    //    ],
-    //    menus: {
-    //        port: ['1', '2', '3', '4'],
-		//	cap_s: [0,1,2,3],
-		//	acc_s: ['x','y','z'],
-		//	push_s: [1,2],
-		//	debug_s: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,18,19,20,21,22,29,30,31,32],
-    //        two: ['1', '2'],
-		//	ten: [1,2,3,4,5,6,7,8,9,10],
-		//	row_s: [1,2,3,4,5,6,7,8],
-		//	col_s: [1,2,3,4,5],
-		//	colors: ['Red','Green','Blue','Orange','Yellow','Violet', 'Teal','White', 'Off '],
-		//	servo_s: ['Start','Stop'],
-		//	coor_s: ['x','y'],
-		//	temp_s: ['°F', '°C'],
-		//	binary_s: ['On','Off']
-    //    },
-    //    url: 'http://www.embeditelectronics.com/blog/learn/'
-    //};
-
-
     getCircuitPlaygroundStatus();
     ScratchExtensions.register('Circuit Playground', descriptor, ext);
 })({});
