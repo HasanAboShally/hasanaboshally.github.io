@@ -656,7 +656,7 @@
         id: "0",
         blocks: [
             ['h', 'when %b', 'mock', ''],
-            ['b', 'button %m.buttons pressed', 'mock', 'on']
+            ['b', 'button %m.buttons pressed?', 'mock', 1]
         ],
         menus: {buttons: [1, 2]}
     };
@@ -678,7 +678,7 @@
             //loudness:['noisy','silent'],
             //brightness:['dark','light'],
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            //tilt_directions: ['left','right'],
+            tilt_directions: ['left', 'right'],
             digital: ['on', 'off']
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
