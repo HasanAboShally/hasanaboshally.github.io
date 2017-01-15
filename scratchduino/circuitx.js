@@ -595,20 +595,20 @@
     };
 
 
+    function elementExists(id) {
+        return $(id).length > 0;
+    }
+
     function appNotConnected() {
-        var elm = document.createElement("div");
-        elm.setAttribute("id", "app-not-connected-popup");
-        elm.innerHTML = "<div style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:red;display: flex; justify-content: center; align-items: center;\'>\n    <div style=\'color:white; font-size:300%;\'>\n        App Not Connected\n\n\n      Pleae install  <a href=\'https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf\' target=\'_blank\'>THIS PLUGIN</a>, run it and check back here.\n        \n    </div>\n</div>";
-        document.body.appendChild(elm);
+
+        if (elementExists('#app-not-connected-popup'))
+            return;
+
+        $('body').append("<div style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:red;display: flex; justify-content: center; align-items: center;\'>\n    <div style=\'color:white; font-size:300%;\'>\n        App Not Connected\n\n\n      Pleae install  <a href=\'https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf\' target=\'_blank\'>THIS PLUGIN</a>, run it and check back here.\n        \n    </div>\n</div>");
     }
 
     function appConnected() {
-
-        var elem = document.getElementById('app-not-connected-popup');
-
-        if (elem) {
-            elem.parentNode.removeChild(elem);
-        }
+        $('#app-not-connected-popup').remove();
     }
 
     ext._getStatus = function () {
@@ -656,7 +656,7 @@
         id: "0",
         blocks: [
             ['h', 'when %b', 'mock', ''],
-            ['b', 'button %m.buttons pressed', 'mock',  'on']
+            ['b', 'button %m.buttons pressed', 'mock', 'on']
         ],
         menus: {buttons: [1, 2]}
     };
