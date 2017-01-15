@@ -711,7 +711,7 @@
     };
 
     var levels = [level1,level2];
-    var level_param = $.url().param('level') || 1;
+    var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var current_level  = levels[level_param -1];
 
     var descriptor = {
