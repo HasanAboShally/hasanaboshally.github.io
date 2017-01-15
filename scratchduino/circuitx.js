@@ -51,7 +51,7 @@
 
     //gets the connection status fo the circuit playground
     var getCircuitPlaygroundStatus = function () {
-        //console.log("status"); 
+        //console.log("status");
         chrome.runtime.sendMessage(embeditAppID, {message: "STATUS"}, function (response) {
             if (response === undefined) { //Chrome app not found
                 console.log("Chrome app not found");
@@ -558,7 +558,7 @@
 
     ext.getCap = function (port) {
         //converts to 0 to 100 scale
-        var cap1 = sensorvalue[port];//Math.floor(sensorvalue[port - 1] / 2.55); 
+        var cap1 = sensorvalue[port];//Math.floor(sensorvalue[port - 1] / 2.55);
         console.log("cap " + port + ": " + cap1);
         if (cap1 > 80) {
             return 1;
@@ -652,12 +652,14 @@
         return false;
     }
 
-
-    var base_blocks = [
-        ['h', 'when %b', 'mock', '']
-        ['b', 'button %m.buttons pressed', 'mock', 'on'],
-        //['b', 'shaken ?', 'mock']
-    ];
+    var root_level = {
+        id: "0",
+        blocks: [
+            ['h', 'when %b', 'mock', ''],
+            ['b', 'button %m.buttons pressed', 'mock',  'on']
+        ],
+        menus: {buttons: [1, 2]}
+    };
 
     var level1 = {
         id: "1",
@@ -666,10 +668,10 @@
             [' ', 'play rainbow', 'mock'],
             //[' ', 'turn all leds off', 'mock'],
             [' ', 'turn led %n leds off', 'mock', 1],
-            [' ', 'set led %n to %c', 'mock', 1,'ff0000'],
+            [' ', 'set led %n to %c', 'mock', 1, 'ff0000'],
             ['b', 'noise?', 'mock'],
             ['b', 'dark?', 'mock'],
-            ['b', 'tilted %m.tilt_directions ?', 'mock','left'],
+            ['b', 'tilted %m.tilt_directions ?', 'mock', 'left'],
             ['b', 'shaken?', 'mock']
         ],
         menus: {
@@ -677,8 +679,7 @@
             //brightness:['dark','light'],
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             //tilt_directions: ['left','right'],
-            digital: ['on', 'off'],
-            buttons: [1, 2]
+            digital: ['on', 'off']
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
@@ -706,7 +707,6 @@
             digital_pins: [6, 9, 10, 12],
             axis: ['x', 'y', 'z'],
             binary: ['on', 'off']
-
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
@@ -716,8 +716,8 @@
     var current_level = levels[level_param - 1];
 
     var descriptor = {
-        blocks: base_blocks.concat(current_level.blocks),
-        menus: current_level.menus,
+        blocks: root_level.blocks.concat(current_level.blocks),
+        menus: current_level.menus,//Object.assign({}, root_level.menus, current_level.menus ),
         url: current_level.url
     };
 
