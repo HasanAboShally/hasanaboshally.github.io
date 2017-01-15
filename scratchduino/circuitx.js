@@ -668,7 +668,7 @@
             [' ', 'play rainbow', 'mock'],
             //[' ', 'turn all leds off', 'mock'],
             [' ', 'turn led %n leds off', 'mock', 1],
-            [' ', 'set led %n to %c', 'mock', 1, 'ff0000'],
+            [' ', 'set led %n to %c', 'mock', 1, '#ff0000'],
             ['b', 'noise?', 'mock'],
             ['b', 'dark?', 'mock'],
             //['b', 'tilted %m.tilt_directions ?', 'mock', 'left'],
@@ -687,16 +687,16 @@
     var level2 = {
         id: "2",
         blocks: [
-            ['b', 'digital pin %m.digital_pins on ?', 'mock', 6],
-            ['r', 'analog pin %m.analog_pins', 'mock', 6],
+            ['b', 'digital pin %n on ?', 'mock', 6],
+            ['r', 'analog pin %n', 'mock', 6],
             ['r', 'accelerometer %m.axis', 'mock', 'x'],
             ['r', 'loudness', 'mock'],
             ['r', 'brightness', 'mock'],
             ['r', 'tempreture', 'mock'],
 
-            [' ', 'set let %m.leds to ( R:%n , G:%n , B:%n )', 'mock', 1, 255, 0, 0],
-            [' ', 'set digital pin %m.digital_pins to %m.binary', 'mock', 6, 'on'],
-            [' ', 'set analog pin %m.analog_pins to %n %', 'mock', 6, 50],
+            [' ', 'set let %n to ( R:%n , G:%n , B:%n )', 'mock', 1, 255, 0, 0],
+            [' ', 'set digital pin %n to %b', 'mock', 6, 'on'],
+            [' ', 'set analog pin %n to %n %', 'mock', 6, 50],
 
             ['b', 'shaken?', 'mock']
 
