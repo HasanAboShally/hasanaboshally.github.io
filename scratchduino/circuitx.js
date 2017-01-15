@@ -648,8 +648,6 @@
 	*/
 
 
-	// b = bolean
-    // ' ' =
 
     function mock(){
         return false;
@@ -658,28 +656,30 @@
 
     var base_blocks = [
         ['h', 'when %b','mock',''],
-        ['b', 'button %m.binary ?', 'mock', 'on'],
+        ['b', 'button %m.digital ?', 'mock', 'on'],
         ['b', 'shaken ?', 'mock']
     ];
 
     var level1 = {
         id:"1",
         blocks:[
-            ['b', '%m.loudness ?', 'mock','noisy'],
-            ['b', '%m.brightness ?', 'mock','light'],
-            ['b', 'tilted %m.tilt_directions ?', 'mock','noisy'],
-            ['b', 'shaken ?', 'mock'],
+            ['b', 'noise?', 'mock'],
+            ['b', 'dark?', 'mock'],
+            //['b', 'tilted %m.tilt_directions ?', 'mock','left'],
+            ['b', 'shaken?', 'mock'],
             [' ', 'play rainbow','mock'],
-            [' ', 'turn leds off','mock'],
-            [' ', 'set let %m.leds to %c','mock',1],
-            ['h', 'when shaken','mock']
+            [' ', 'turn all leds off','mock'],
+            [' ', 'turn led %m.leds leds off','mock',1],
+            [' ', 'set led %m.leds to %c','mock',1],
+            ['h', 'when button %m.buttons pressed']
         ],
         menus:{
-            loudness:['noisy','silent'],
-            brightness:['dark','light'],
+            //loudness:['noisy','silent'],
+            //brightness:['dark','light'],
             leds: [1,2,3,4,5,6,7,8,9,10],
-            tilt_directions: ['left','right'],
-            binary:['on','off']
+            //tilt_directions: ['left','right'],
+            digital:['on','off'],
+            buttons:[1,2]
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
@@ -711,7 +711,7 @@
     };
 
     var levels = [level1,level2];
-    var level_param = getQueryParam('level') || 1;
+    var level_param = $.url().param('level') || 1;
     var current_level  = levels[level_param -1];
 
     var descriptor = {
@@ -720,71 +720,12 @@
         url : current_level.url
     };
 
-    //var descriptor = {
-    //
-    //    blocks: [
-		//	[' ', "miLAB: Smile", "smile"],
-		//	[' ', "miLAB: Turn Neopixels Off", "turnOffNeopixels"],
-    //        ['b', 'dark?', 'isDark'],
-    //
-		//	['b', "Touch sensor %m.cap_s touched?", "getCap", 0],
-		//	[' ', "Set Neopixel Ring %m.ten to %m.colors", "setRingLed", '1', 'Red'],
-		//	[' ', "Set Neopixel Matrix Row %m.row_s to %m.colors", "setRowLed", 1, 'Red'],
-		//	[' ', "Set Neopixel Matrix Column %m.col_s to %m.colors", "setColLed", 1, 'Green'],
-		//	[' ', "Set Neopixel Matrix Pixel %m.row_s %m.col_s to %m.colors", "setPixLed", 1, 1, 'Blue'],
-		//	[' ', "Set Full Neopixel Matrix to %m.colors", "setFullLed", 'Off'],
-    //        [' ', "Turn LED %m.binary_s", "setLed", 'On'],
-		//	[' ', "%m.servo_s Servo %m.push_s", "setupServo", 'Start', 1],
-    //        [' ', "Set Servo %m.push_s angle to %n", "setServo", 1, 90],
-		//	['r', "Get Light Brightness", "getLight"],
-    //        ['r', "Get Board Temperature in %m.temp_s", "getTemp", '°F'],
-    //        ['r', "Get Microphone Loudness", "getSound"],
-		//	['r', "Get Accelerometer %m.acc_s axis", "getAcc", 'x'],
-		//	['b', "Pushbutton %m.push_s pushed?", "getPush", 1],
-		//	['b', "Switch on?", "getSwitch"],
-		//	['r', "Map value: %n to range %n - %n", "mapVal", 127, -180,180],
-    //        ['r', "Debug value on port %m.debug_s", "getRaw", 1]
-    //    ],
-    //    menus: {
-    //        port: ['1', '2', '3', '4'],
-		//	cap_s: [0,1,2,3],
-		//	acc_s: ['x','y','z'],
-		//	push_s: [1,2],
-		//	debug_s: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,18,19,20,21,22,29,30,31,32],
-    //        two: ['1', '2'],
-		//	ten: [1,2,3,4,5,6,7,8,9,10],
-		//	row_s: [1,2,3,4,5,6,7,8],
-		//	col_s: [1,2,3,4,5],
-		//	colors: ['Red','Green','Blue','Orange','Yellow','Violet', 'Teal','White', 'Off '],
-		//	servo_s: ['Start','Stop'],
-		//	coor_s: ['x','y'],
-		//	temp_s: ['°F', '°C'],
-		//	binary_s: ['On','Off']
-    //    },
-    //    url: 'http://www.embeditelectronics.com/blog/learn/'
-    //};
 
 
     getCircuitPlaygroundStatus();
     ScratchExtensions.register('Circuit Playground', descriptor, ext);
 
 
-
-
-
-    /* helper functions */
-
-    function getQueryParam(name, url) {
-        if (!url) {
-            url = window.location.href;
-        }
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
 
 
 })({});
