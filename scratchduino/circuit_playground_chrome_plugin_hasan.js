@@ -656,14 +656,17 @@
     }
 
 
-    var levels = [{
+    var base_blocks = [
+        ['h', 'when %b','mock',''],
+        ['b', 'button %m.binary ?', 'mock', 'on'],
+        ['b', 'shaken ?', 'mock']
+    ];
+
+    var level1 = {
         id:"1",
         blocks:[
-            ['h', 'when %b','mock',''],
-            ['b', 'button %m.binary ?', 'mock', 'on'],
-            ['b', 'shaken ?', 'mock'],
-            ['b', '%m.noise ?', 'mock','noisy'],
-            ['b', '%m.light ?', 'mock','light'],
+            ['b', '%m.loudness ?', 'mock','noisy'],
+            ['b', '%m.brightness ?', 'mock','light'],
             ['b', 'tilted %m.tilt_directions ?', 'mock','noisy'],
             ['b', 'shaken ?', 'mock'],
             [' ', 'play rainbow','mock'],
@@ -672,19 +675,47 @@
             ['h', 'when shaken','mock']
         ],
         menus:{
-            noise:['noisy','silent'],
-            light:['dark','light'],
+            loudness:['noisy','silent'],
+            brightness:['dark','light'],
             leds: [1,2,3,4,5,6,7,8,9,10],
             tilt_directions: ['left','right'],
             binary:['on','off']
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
-    }];
+    };
 
-    var current_level  = levels[0];
+    var level2 = {
+        id:"2",
+        blocks:[
+            ['b', 'digital pin %m.digital_pins on ?', 'mock',6],
+            ['r', 'analog pin %m.analog_pins', 'mock',6],
+            ['r', 'accelerometer %m.axis', 'mock','x'],
+            ['r', 'loudness', 'mock'],
+            ['r', 'brightness', 'mock'],
+            ['r', 'tempreture', 'mock'],
+
+
+            [' ', 'set let %m.leds to (R:%n,G:%n,B:%n)','mock',1,255,0,0],
+            [' ', 'set digital pin %m.digital_pins to %m.binary','mock',6,'on'],
+            [' ', 'set analog pin %m.analog_pins to %n %','mock',6,50]
+        ],
+        menus:{
+            leds: [1,2,3,4,5,6,7,8,9,10],
+            analog_pins: [6,9,10,12],
+            digital_pins: [6,9,10,12],
+            axis:['x','y','z'],
+            binary:['on','off']
+
+        },
+        url: 'http://www.embeditelectronics.com/blog/learn/'
+    };
+
+    var levels = [level1,level2];
+    var level_param = getQueryParam('level') || 1;
+    var current_level  = levels[level_param -1];
 
     var descriptor = {
-        blocks : current_level.blocks,
+        blocks : base_blocks.concat(current_level.blocks),
         menus : current_level.menus,
         url : current_level.url
     };
@@ -736,4 +767,24 @@
 
     getCircuitPlaygroundStatus();
     ScratchExtensions.register('Circuit Playground', descriptor, ext);
+
+
+
+
+
+    /* helper functions */
+
+    function getQueryParam(name, url) {
+        if (!url) {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+
 })({});
