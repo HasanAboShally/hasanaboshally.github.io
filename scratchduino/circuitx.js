@@ -604,7 +604,7 @@
         if (elementExists('#app-not-connected-popup'))
             return;
 
-        $('body').append("<div id=\'app-not-connected-popup\'\n     style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(0,0,0,0.75);display: flex; justify-content: center; align-items: center;\'>\n    \n    \n    <div style=\'color:white; font-size:300%;\'>\n        App Not Connected\n        \n        <br/>\n        \n\n\n      Please install/lunch  <a href=\'https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf\' target=\'_blank\'>THIS APP</a>, check back here.\n        \n    </div>\n</div>");
+        $('body').append("<div id=\'app-not-connected-popup\'\n     style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(0,0,0,0.75);display: flex; justify-content: center; align-items: center;\'>\n\n\n    <div style=\'color:white; font-size:200%; margin:20%; background:white;border-radius: 4px; box-shadow:0 2px 2px rgba(0,0,0,0.5)\'>\n        App Not Connected\n\n        <br/>\n\n\n        Please install/lunch <a href=\'https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf\'\n                                target=\'_blank\'>THIS APP</a>, and check back here.\n\n        <img src=\"https://s-media-cache-ak0.pinimg.com/originals/ba/ab/83/baab83e843adb791cb243a094c658dc2.gif\"\n             style=\'display: block;width:50%;margin:20px auto\'>\n\n    </div>\n</div>");
     }
 
     function appConnected() {
