@@ -653,23 +653,27 @@
     }
 
 
-    var base_blocks = [
-        ['h', 'when %b', 'mock', '']
-        //['b', 'button %m.digital ?', 'mock', 'on'],
-        //['b', 'shaken ?', 'mock']
-    ];
+    var root_level = {
+        id:"0",
+        blocks:[
+            ['h', 'when %b', 'mock', '']
+            ['b', 'button %m.buttons pressed', 'mock', 'on']
+        ],
+        menus:{
+            buttons: [1, 2]
+        }
+    };
 
     var level1 = {
         id: "1",
         blocks: [
-            ['h', 'when button %m.buttons pressed', 'mock', 1],
+            //['h', 'when button %m.buttons pressed', 'mock', 1],
             [' ', 'play rainbow', 'mock'],
-            [' ', 'turn all leds off', 'mock'],
-            [' ', 'turn led %m.leds leds off', 'mock', 1],
-            [' ', 'set led %n to %c', 'mock', 1,1],
+            [' ', 'turn led %n leds off', 'mock', 1],
+            [' ', 'set led %n to %c', 'mock', 1,'ff0000'],
             ['b', 'noise?', 'mock'],
             ['b', 'dark?', 'mock'],
-            //['b', 'tilted %m.tilt_directions ?', 'mock','left'],
+            ['b', 'tilted %m.tilt_directions ?', 'mock','left'],
             ['b', 'shaken?', 'mock']
         ],
         menus: {
@@ -677,8 +681,7 @@
             //brightness:['dark','light'],
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             //tilt_directions: ['left','right'],
-            digital: ['on', 'off'],
-            buttons: [1, 2]
+            digital: ['on', 'off']
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
@@ -693,10 +696,12 @@
             ['r', 'brightness', 'mock'],
             ['r', 'tempreture', 'mock'],
 
-
-            [' ', 'set let %m.leds to (R:%n,G:%n,B:%n)', 'mock', 1, 255, 0, 0],
+            [' ', 'set let %m.leds to ( R:%n , G:%n , B:%n )', 'mock', 1, 255, 0, 0],
             [' ', 'set digital pin %m.digital_pins to %m.binary', 'mock', 6, 'on'],
-            [' ', 'set analog pin %m.analog_pins to %n %', 'mock', 6, 50]
+            [' ', 'set analog pin %m.analog_pins to %n %', 'mock', 6, 50],
+
+            ['b', 'shaken?', 'mock']
+
         ],
         menus: {
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -713,9 +718,10 @@
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var current_level = levels[level_param - 1];
 
+
     var descriptor = {
-        blocks: base_blocks.concat(current_level.blocks),
-        menus: current_level.menus,
+        blocks: root_level.blocks.concat(current_level.blocks),
+        menus: Object.assign({}, root_level.menus, current_level.menus ),
         url: current_level.url
     };
 
