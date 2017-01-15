@@ -653,22 +653,18 @@
     }
 
 
-    var root_level = {
-        id:"0",
-        blocks:[
-            ['h', 'when %b', 'mock', '']
-                ['b', 'button %m.buttons pressed', 'mock', 'on']
-        ],
-        menus:{
-            buttons: [1, 2]
-        }
-    };
+    var base_blocks = [
+        ['h', 'when %b', 'mock', '']
+        ['b', 'button %m.buttons pressed', 'mock', 'on'],
+        //['b', 'shaken ?', 'mock']
+    ];
 
     var level1 = {
         id: "1",
         blocks: [
             //['h', 'when button %m.buttons pressed', 'mock', 1],
             [' ', 'play rainbow', 'mock'],
+            //[' ', 'turn all leds off', 'mock'],
             [' ', 'turn led %n leds off', 'mock', 1],
             [' ', 'set led %n to %c', 'mock', 1,'ff0000'],
             ['b', 'noise?', 'mock'],
@@ -681,7 +677,8 @@
             //brightness:['dark','light'],
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             //tilt_directions: ['left','right'],
-            digital: ['on', 'off']
+            digital: ['on', 'off'],
+            buttons: [1, 2]
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
@@ -718,14 +715,15 @@
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var current_level = levels[level_param - 1];
 
-
     var descriptor = {
-        blocks: root_level.blocks.concat(current_level.blocks),
-        menus: current_level.menus,//Object.assign({}, root_level.menus, current_level.menus ),
+        blocks: base_blocks.concat(current_level.blocks),
+        menus: current_level.menus,
         url: current_level.url
     };
 
+
     getCircuitPlaygroundStatus();
     ScratchExtensions.register('Circuit Playground', descriptor, ext);
+
 
 })({});
