@@ -598,7 +598,7 @@
     $('head').append('<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf">');
 
 
-    function installPlugin(){
+    window.installPlugin = function(){
         chrome.webstore.install('https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf',
             function(d){
                 console.log('installed')
@@ -606,7 +606,7 @@
             function(e){
                 console.log('not installed: '+ e)
             });
-    }
+    };
 
     function appNotConnected() {
         var elm = document.createElement("div");
