@@ -655,9 +655,9 @@
 
 
     var base_blocks = [
-        ['h', 'when %b','mock',''],
-        ['b', 'button %m.digital ?', 'mock', 'on'],
-        ['b', 'shaken ?', 'mock']
+        ['h', 'when %b','mock','']
+        //['b', 'button %m.digital ?', 'mock', 'on'],
+        //['b', 'shaken ?', 'mock']
     ];
 
     var level1 = {
@@ -671,7 +671,7 @@
             [' ', 'turn all leds off','mock'],
             [' ', 'turn led %m.leds leds off','mock',1],
             [' ', 'set led %m.leds to %c','mock',1],
-            ['h', 'when button %m.buttons pressed']
+            ['h', 'when button %m.buttons pressed', 'mock',1]
         ],
         menus:{
             //loudness:['noisy','silent'],
