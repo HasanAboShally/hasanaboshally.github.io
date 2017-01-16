@@ -657,9 +657,7 @@
 
 
     environments = {
-        "en":{
-            levels:[]
-        }
+        "en":{}
     };
 
     environments.en.root_level = {
@@ -671,24 +669,30 @@
         menus: {buttons: [1, 2]}
     };
 
-    environments.en.levels[0] = {
+    var level1 = {
         id: "1",
         blocks: [
+            //['h', 'when button %m.buttons pressed', 'mock', 1],
             [' ', 'play rainbow', 'mock'],
+            //[' ', 'turn all leds off', 'mock'],
             [' ', 'turn led %n leds off', 'mock', 1],
             [' ', 'set led %n to %c', 'mock', 1, '#ff0000'],
             ['b', 'noise?', 'mock'],
             ['b', 'dark?', 'mock'],
+            //['b', 'tilted %m.tilt_directions ?', 'mock', 'left'],
             ['b', 'shaken?', 'mock']
         ],
         menus: {
+            //loudness:['noisy','silent'],
+            //brightness:['dark','light'],
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            //tilt_directions: ['left', 'right'],
             digital: ['on', 'off']
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
 
-    environments.en.levels[1] = {
+    var level2 = {
         id: "2",
         blocks: [
             ['b', 'digital pin %n on ?', 'mock', 6],
@@ -715,15 +719,13 @@
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
 
+    var levels = [level1, level2];
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
-    var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 1;
-
-    var current_environment = environments[lang_param];
-    var current_level = current_environment.levels[level_param-1];
+    var current_level = levels[level_param - 1];
 
     var descriptor = {
-        blocks: current_environment.root_level.blocks.concat(current_level.blocks),
-        menus: Object.assign({}, current_environment.root_level.menus, current_level.menus ),
+        blocks: root_level.blocks.concat(current_level.blocks),
+        menus: Object.assign({}, root_level.menus, current_level.menus ),
         url: current_level.url
     };
 
