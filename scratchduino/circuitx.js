@@ -118,6 +118,8 @@
         var currentTime = new Date();
         var timeDiff = currentTime.getTime() - prevTime.getTime();
 
+        var res = false;
+
         if (timeDiff > 100) {
 
             var currentAxis = {
@@ -128,13 +130,14 @@
 
             var speed = Math.abs((currentAxis.x - prevAxis.x) + (currentAxis.y - prevAxis.y) + (currentAxis.z - prevAxis.z)) / timeDiff * 10000;
 
-            return speed > SHAKE_THRESHOLD;
+            res = speed > SHAKE_THRESHOLD;
         }
+
 
         prevTime = currentTime;
         prevAxis = currentAxis;
 
-        return false;
+        return res;
 
     };
 
@@ -290,7 +293,7 @@
     };
 
     ext.turnLedOff = function (ledIndex) {
-        setNeopixel(ledIndex, '#000000');
+        setNeopixel(ledIndex - 1, '#000000');
     };
 
     ext.setLed = function (ledIndex, color) {
