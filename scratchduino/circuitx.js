@@ -294,8 +294,11 @@
     };
 
     ext.setLed = function (ledIndex, color) {
-        var hex = decimalColorToHTMLcolor(color);
-        setNeopixel(ledIndex, hex);
+        var hexColor = decimalColorToHTMLcolor(color);
+        hexColor = decimalColorToHTMLcolor(color);
+        hexColor = decimalColorToHTMLcolor(color);
+        hexColor = decimalColorToHTMLcolor(color);
+        setNeopixel(ledIndex - 1, hexColor);
     };
 
     ext.isNoise = function () {
