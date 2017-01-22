@@ -115,18 +115,18 @@
 
     ext.isShaking = function () {
 
-        var currentTime = new Date();
-        var timeDiff = currentTime.getTime() - prevTime.getTime();
-
         var res = false;
 
-        if (timeDiff > 100) {
+        var currentTime = new Date();
+        var currentAxis = {
+            x: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.X],
+            y: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.Y],
+            z: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.Z]
+        };
 
-            var currentAxis = {
-                x: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.X],
-                y: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.Y],
-                z: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.Z]
-            };
+        var timeDiff = currentTime.getTime() - prevTime.getTime();
+
+        if (timeDiff > 100) {
 
             var speed = Math.abs((currentAxis.x - prevAxis.x) + (currentAxis.y - prevAxis.y) + (currentAxis.z - prevAxis.z)) / timeDiff * 10000;
 
