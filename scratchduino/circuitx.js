@@ -109,6 +109,34 @@
     };
 
 
+    var prevTime = new Date();
+    var prevAxis = {x: 0, y: 0, z: 0};
+    var SHAKE_THRESHOLD = 800;
+
+    ext.isShaking = function () {
+
+        var currentTime = new Date();
+        var timeDiff = currentTime.getTime() - prevTime.getTime();
+
+        if (timeDiff > 100) {
+            prevTime = currentTime;
+
+            var currentAxis = {
+                x: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.X],
+                y: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.Y],
+                z: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.Z]
+            };
+
+            var speed = Math.abs((currentAxis.x - prevAxis.x) + (currentAxis.y - prevAxis.y) + (currentAxis.z - prevAxis.z)) / timeDiff * 10000;
+
+            return speed > SHAKE_THRESHOLD;
+        }
+
+        return false;
+
+    };
+
+
     function isOff(hex) {
         return hex == "#000000";
     }
@@ -247,25 +275,23 @@
         return false;
     }
 
-
-    ext.when = function (b) {
-        return b;
-    };
-
+    //ext.when = function (b) {
+    //    return b;
+    //};
 
     ext.isButtonPressed = function (buttonIndex) {
         return ext.getPush(buttonIndex);
     };
 
-    ext.rainbow = function(){
-        setNeopixels(["#9400D3", "#4B0082", "#0000FF", "#00FF00", "#FFFF00", "#FF7F00", "#FF0000", "#ffffff", "#ffffff", "#ffffff"], 200);
+    ext.rainbow = function () {
+        setNeopixels(["#9400D3", "#0000FF", "#00FF00", "#FFFF00", "#FF0000", "#FF0000", "#FFFF00", "#00FF00", "#0000FF", "#9400D3"], 200);
     };
 
-    ext.turnLedOff = function(ledIndex){
+    ext.turnLedOff = function (ledIndex) {
         setNeopixel(ledIndex, '#000000');
     };
 
-    ext.setLed = function(ledIndex, color){
+    ext.setLed = function (ledIndex, color) {
         setNeopixel(ledIndex, color);
     };
 
@@ -277,11 +303,6 @@
         return (ext.getLight() < 20);
     };
 
-    ext.isShaken = function () {
-        return true;//(ext.getLight() < 20);
-    };
-
-
 
     var environments = {
         "en": {
@@ -292,7 +313,7 @@
     environments.en.root_level = {
         id: "0",
         blocks: [
-            ['h', 'when %b', 'when', false],
+            //['h', 'when %b', 'when', false],
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1]
         ],
         menus: {buttons: [1, 2]}
@@ -306,7 +327,7 @@
             [' ', 'set led %n to %c', 'setLed', 1, '#ff0000'],
             ['b', 'noise?', 'isNoise'],
             ['b', 'dark?', 'isDark'],
-            ['b', 'shaken?', 'isShaken']
+            ['b', 'shaking?', 'isShaking']
         ],
         menus: {
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
