@@ -115,7 +115,6 @@
 
     ext.isShaking = function () {
 
-        var res = false;
 
         var currentTime = new Date();
         var currentAxis = {
@@ -126,17 +125,13 @@
 
         var timeDiff = currentTime.getTime() - prevTime.getTime();
 
-        if (timeDiff > 100) {
-
-            var speed = Math.abs((currentAxis.x - prevAxis.x) + (currentAxis.y - prevAxis.y) + (currentAxis.z - prevAxis.z)) / timeDiff * 10000;
-
-            res = speed > SHAKE_THRESHOLD;
-        }
+        var speed = Math.abs((currentAxis.x - prevAxis.x) + (currentAxis.y - prevAxis.y) + (currentAxis.z - prevAxis.z)) / timeDiff * 10000;
+        console.log(speed);
 
         prevTime = currentTime;
         prevAxis = currentAxis;
 
-        return res;
+        return (timeDiff > 100) && (speed > SHAKE_THRESHOLD);
     };
 
 
