@@ -716,7 +716,7 @@
     };
 
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
-    var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 1;
+    var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 'en';
 
     var current_environment = environments[lang_param];
     var current_level = current_environment.levels[level_param-1];
