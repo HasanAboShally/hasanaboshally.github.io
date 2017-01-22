@@ -109,29 +109,76 @@
     };
 
 
-    var prevTime = new Date();
-    var prevAxis = {x: 0, y: 0, z: 0};
-    var SHAKE_THRESHOLD = 800;
+    //var prevTime = new Date();
+    //var prevAxis = {x: 0, y: 0, z: 0};
+    //var SHAKE_THRESHOLD = 800;
+    //
+    //ext.isShaking = function () {
+    //
+    //
+    //    var currentTime = new Date();
+    //    var currentAxis = {
+    //        x: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.X],
+    //        y: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.Y],
+    //        z: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.Z]
+    //    };
+    //
+    //    //var timeDiff = currentTime.getTime() - prevTime.getTime();
+    //
+    //    var speed = Math.abs((currentAxis.x - prevAxis.x) + (currentAxis.y - prevAxis.y) + (currentAxis.z - prevAxis.z));// / timeDiff * 10000;
+    //    console.log(speed);
+    //
+    //    prevTime = currentTime;
+    //    prevAxis = currentAxis;
+    //
+    //    return (speed > SHAKE_THRESHOLD);// (timeDiff > 100);
+    //};
 
+
+    var prevXYZ = {};
+    var prevTime = new Date();
     ext.isShaking = function () {
 
+        var res = false;
 
-        var currentTime = new Date();
-        var currentAxis = {
+        var threshold = 15; //default velocity threshold for shake to register
+        var timeout = 1000; //default interval between events
+
+        var current = {
             x: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.X],
             y: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.Y],
             z: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.Z]
         };
 
-        var timeDiff = currentTime.getTime() - prevTime.getTime();
+        // For the first time
+        if ((prevXYZ.x === null) && (prevXYZ.y === null) && (prevXYZ.z === null)) {
+            prevXYZ.x = current.x;
+            prevXYZ.y = current.y;
+            prevXYZ.z = current.z;
+            return;
+        }
 
-        var speed = Math.abs((currentAxis.x - prevAxis.x) + (currentAxis.y - prevAxis.y) + (currentAxis.z - prevAxis.z)) / timeDiff * 10000;
-        console.log(speed);
+        var deltaX = Math.abs(prevXYZ.x - current.x);
+        var deltaY = Math.abs(prevXYZ.y - current.y);
+        var deltaZ = Math.abs(prevXYZ.z - current.z);
 
-        prevTime = currentTime;
-        prevAxis = currentAxis;
+        if (((deltaX > threshold) && (deltaY > threshold)) || ((deltaX > threshold) && (deltaZ > threshold)) || ((deltaY > threshold) && (deltaZ > threshold))) {
+            //calculate time in milliseconds since last shake registered
+            var currentTime = new Date();
+            var timeDifference = currentTime.getTime() - prevTime.getTime();
 
-        return (timeDiff > 100) && (speed > SHAKE_THRESHOLD);
+            if (timeDifference > timeout) {
+                res = true;
+                prevTime = new Date();
+            }
+        }
+
+        prevXYZ.lastX = current.x;
+        prevXYZ.lastY = current.y;
+        prevXYZ.lastZ = current.z;
+
+        return res;
+
     };
 
 
