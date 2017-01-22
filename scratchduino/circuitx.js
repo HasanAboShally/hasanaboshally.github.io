@@ -119,7 +119,6 @@
         var timeDiff = currentTime.getTime() - prevTime.getTime();
 
         if (timeDiff > 100) {
-            prevTime = currentTime;
 
             var currentAxis = {
                 x: circuitData[CIRCUIT.SENSORS.ACCELEROMETER.X],
@@ -131,6 +130,9 @@
 
             return speed > SHAKE_THRESHOLD;
         }
+
+        prevTime = currentTime;
+        prevAxis = currentAxis;
 
         return false;
 
@@ -292,7 +294,8 @@
     };
 
     ext.setLed = function (ledIndex, color) {
-        setNeopixel(ledIndex, color);
+        var hex = decimalColorToHTMLcolor(color);
+        setNeopixel(ledIndex, hex);
     };
 
     ext.isNoise = function () {
@@ -403,5 +406,33 @@
         } : null;
     }
 
+
+    function decimalColorToHTMLcolor(number) {
+        //converts to a integer
+        var intnumber = number - 0;
+
+        // isolate the colors - really not necessary
+        var red, green, blue;
+
+        // needed since toString does not zero fill on left
+        var template = "#000000";
+
+        // in the MS Windows world RGB colors
+        // are 0xBBGGRR because of the way Intel chips store bytes
+        red = (intnumber & 0x0000ff) << 16;
+        green = intnumber & 0x00ff00;
+        blue = (intnumber & 0xff0000) >>> 16;
+
+        // mask out each color and reverse the order
+        intnumber = red | green | blue;
+
+        // toString converts a number to a hexstring
+        var HTMLcolor = intnumber.toString(16);
+
+        //template adds # for standard HTML #RRGGBB
+        HTMLcolor = template.substring(0, 7 - HTMLcolor.length) + HTMLcolor;
+
+        return HTMLcolor;
+    }
 
 })({});
