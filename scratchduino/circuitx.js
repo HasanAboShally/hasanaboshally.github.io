@@ -133,7 +133,6 @@
             res = speed > SHAKE_THRESHOLD;
         }
 
-
         prevTime = currentTime;
         prevAxis = currentAxis;
 
