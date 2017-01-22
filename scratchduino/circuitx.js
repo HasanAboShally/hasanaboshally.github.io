@@ -10,6 +10,9 @@
     //when a new message is recieved, save all the info
     var onMsgCircuitPlayground = function (msg) {
         sensorvalue = msg;
+
+
+        // [3, 4, 3, 11, 13, 83, 80, 0, 0, 1, 212, 56, 102, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null]
     };
 
     function fitTo255(num) {
@@ -53,31 +56,32 @@
     var getCircuitPlaygroundStatus = function () {
         //console.log("status");
         chrome.runtime.sendMessage(embeditAppID, {message: "STATUS"}, function (response) {
+
+
             if (response === undefined) { //Chrome app not found
                 console.log("Chrome app not found");
                 hStatus = 0;
                 setTimeout(getCircuitPlaygroundStatus, 2000);
+                return;
             }
-            else if (response.status === false) { //Chrome app says not connected
-                if (hStatus !== 1) {
-                    console.log("Not connected");
-                    hPort = chrome.runtime.connect(embeditAppID);
-                    hPort.onMessage.addListener(onMsgCircuitPlayground);
-                }
+
+            if (response.status === false) { //Chrome app says not connected
+                //console.log("Not connected");
+                //hPort = chrome.runtime.connect(embeditAppID);
+                //hPort.onMessage.addListener(onMsgCircuitPlayground);
                 hStatus = 1;
-                setTimeout(getCircuitPlaygroundStatus, 2000);
             }
-            else {// successfully connected
-                if (hStatus !== 2) {
-                    console.log("Connected");
-                    isDuo = response.duo;
-                    console.log("isDuo: " + isDuo);
-                    hPort = chrome.runtime.connect(embeditAppID);
-                    hPort.onMessage.addListener(onMsgCircuitPlayground);
-                }
+
+            if(response.status === false) {// successfully connected
+                console.log("Connected");
+                isDuo = response.duo;
+                console.log("isDuo: " + isDuo);
+                hPort = chrome.runtime.connect(embeditAppID);
+                hPort.onMessage.addListener(onMsgCircuitPlayground);
                 hStatus = 2;
-                setTimeout(getCircuitPlaygroundStatus, 2000);
             }
+
+            setTimeout(getCircuitPlaygroundStatus, 2000);
         });
     };
 
@@ -657,8 +661,8 @@
 
 
     environments = {
-        "en":{
-            levels:[]
+        "en": {
+            levels: []
         }
     };
 
@@ -719,11 +723,11 @@
     var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 'en';
 
     var current_environment = environments[lang_param];
-    var current_level = current_environment.levels[level_param-1];
+    var current_level = current_environment.levels[level_param - 1];
 
     var descriptor = {
         blocks: current_environment.root_level.blocks.concat(current_level.blocks),
-        menus: Object.assign({}, current_environment.root_level.menus, current_level.menus ),
+        menus: Object.assign({}, current_environment.root_level.menus, current_level.menus),
         url: current_level.url
     };
 
