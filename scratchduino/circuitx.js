@@ -8,12 +8,14 @@
     //sensor info
     var sensorvalue = new Array(32);
     //when a new message is recieved, save all the info
-    var onMsgCircuitPlayground = function (msg) {
-        sensorvalue = msg;
 
 
-        // [3, 4, 3, 11, 13, 83, 80, 0, 0, 1, 212, 56, 102, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null]
-    };
+    // currently the chrome app is not working on mac, so I use this to mock the sensorvalue
+    setInterval(function(){
+        sensorvalue = [3, 4, 3, 11, 13, 83, 80, 0, 0, 1, 212, 56, 102, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null]
+    },20);
+
+
 
     function fitTo255(num) {
         return Math.max(Math.min(num, 255.0), 0.0);
@@ -79,13 +81,20 @@
                 isDuo = response.duo;
                 console.log("isDuo: " + isDuo);
                 hPort = chrome.runtime.connect(embeditAppID);
-                hPort.onMessage.addListener(onMsgCircuitPlayground);
+
+                hPort.onMessage.addListener(function (msg) {
+                    sensorvalue = msg;
+                });
+
                 hStatus = 2;
             }
 
             setTimeout(getCircuitPlaygroundStatus, 2000);
         });
     };
+
+
+
 
     //all the below functions take in a portnum, it is assumed that the port
     //has the appropriate device connected to it.
