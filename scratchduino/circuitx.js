@@ -135,6 +135,8 @@
     //};
 
 
+
+
     var prevXYZ = {};
     var prevTime = new Date();
     ext.isShaking = function () {
