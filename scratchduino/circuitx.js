@@ -269,12 +269,12 @@
         setNeopixel(ledIndex, color);
     };
 
-    ext.isDark = function () {
-        return (ext.getLight() < 20);
-    };
-
     ext.isNoise = function () {
         return (ext.getSound() > 50);
+    };
+
+    ext.isDark = function () {
+        return (ext.getLight() < 20);
     };
 
     ext.isShaken = function () {
@@ -293,7 +293,7 @@
         id: "0",
         blocks: [
             ['h', 'when %b', 'when', false],
-            ['b', 'button %m.buttons pressed?', 'mock', 1]
+            ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1]
         ],
         menus: {buttons: [1, 2]}
     };
@@ -301,12 +301,12 @@
     environments.en.levels[0] = {
         id: "1",
         blocks: [
-            [' ', 'play rainbow', 'mock'],
-            [' ', 'turn led %n off', 'mock', 1],
-            [' ', 'set led %n to %c', 'mock', 1, '#ff0000'],
-            ['b', 'noise?', 'mock'],
-            ['b', 'dark?', 'mock'],
-            ['b', 'shaken?', 'mock']
+            [' ', 'play rainbow', 'rainbow'],
+            [' ', 'turn led %n off', 'turnLedOff', 1],
+            [' ', 'set led %n to %c', 'setLed', 1, '#ff0000'],
+            ['b', 'noise?', 'isNoise'],
+            ['b', 'dark?', 'isDark'],
+            ['b', 'shaken?', 'isShaken']
         ],
         menus: {
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
