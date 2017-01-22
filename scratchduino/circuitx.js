@@ -175,9 +175,9 @@
             }
         }
 
-        prevXYZ.lastX = current.x;
-        prevXYZ.lastY = current.y;
-        prevXYZ.lastZ = current.z;
+        prevXYZ.x = current.x;
+        prevXYZ.y = current.y;
+        prevXYZ.z = current.z;
 
         return res;
 
