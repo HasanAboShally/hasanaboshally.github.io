@@ -58,21 +58,23 @@
         chrome.runtime.sendMessage(embeditAppID, {message: "STATUS"}, function (response) {
 
 
-            if (response === undefined) { //Chrome app not found
+            //Chrome app not found
+            if (response === undefined) {
                 console.log("Chrome app not found");
                 hStatus = 0;
                 setTimeout(getCircuitPlaygroundStatus, 2000);
                 return;
             }
 
-            if (response.status === false) { //Chrome app says not connected
+            //Chrome app says not connected
+            if (response.status === false) {
                 //console.log("Not connected");
                 //hPort = chrome.runtime.connect(embeditAppID);
                 //hPort.onMessage.addListener(onMsgCircuitPlayground);
                 hStatus = 1;
             }
-
-            if(response.status === false) {// successfully connected
+            // successfully connected
+            else if(response.status === true) {
                 console.log("Connected");
                 isDuo = response.duo;
                 console.log("isDuo: " + isDuo);
