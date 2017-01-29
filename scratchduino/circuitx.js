@@ -103,7 +103,6 @@
     }
 
     function setNeopixelRGB(lednum, r, g, b) {
-
         hPort.postMessage({
             message: "O".charCodeAt(0),
             lednum: lednum,
@@ -267,6 +266,9 @@
     ext.isDark = function () {
         return (ext.getBrightness() < 20);
     };
+
+
+    ext.setNeopixelRGB = setNeopixelRGB;
 
 
     var environments = {
