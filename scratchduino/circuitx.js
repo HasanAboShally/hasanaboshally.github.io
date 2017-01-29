@@ -119,7 +119,7 @@
 
     function setNeopixelColor(lednum, color) {
         var hex = decimalColorToHex(color);
-        setNeopixelHex(lednum - 1, hex);
+        setNeopixelHex(lednum, hex);
     }
 
     function setNeopixels(hexArray, interval) {
@@ -256,7 +256,7 @@
     };
 
     ext.turnLedOff = function (lednum) {
-        setNeopixelHex(lednum - 1, '#000000');
+        setNeopixelHex(lednum, '#000000');
     };
 
     ext.isNoise = function () {
