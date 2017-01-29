@@ -135,8 +135,6 @@
     //};
 
 
-
-
     var prevXYZ = {};
     var prevTime = new Date();
     ext.isShaking = function () {
@@ -188,17 +186,25 @@
         return hex == "#000000";
     }
 
-    function setNeopixel(lednum, hex) {
-
-        var color = hexToRgb(hex);
+    function setNeopixelRGB(lednum, r, g, b) {
 
         hPort.postMessage({
             message: "O".charCodeAt(0),
             lednum: lednum,
-            red: color.r,
-            green: color.g,
-            blue: color.b
+            red: r,
+            green: g,
+            blue: b
         });
+    }
+
+    function setNeopixelHex(lednum, hex) {
+        var color = hexToRgb(hex);
+        setNeopixelRGB(lednum, color.r, color.g, color.b);
+    }
+
+    function setNeopixelColor(lednum, color) {
+        var hex = decimalColorToHex(color);
+        setNeopixelHex(lednum - 1, hex);
     }
 
     function setNeopixels(hexArray, interval) {
@@ -211,11 +217,11 @@
 
             if (isOff(hex)) {
                 offs++;
-                setNeopixel(i, hex);
+                setNeopixelHex(i, hex);
             }
             else {
                 var _interval = (i + 1 - offs) * interval; // wait interval also before the first led
-                setTimeout(setNeopixel, _interval, i, hex);
+                setTimeout(setNeopixelHex, _interval, i, hex);
             }
         }
 
@@ -261,19 +267,23 @@
         return deg == '°F' ? temp : toCelsius(temp);
     };
 
-    ext.getSound = function (port) {
+    ext.getLoudness = function () {
         return circuitData[CIRCUIT.SENSORS.MICROPHONE];
     };
 
-    ext.getLight = function (port) {
+    ext.getBrightness = function () {
         return circuitData[CIRCUIT.SENSORS.LIGHT];
+    };
+
+    ext.getTemperature = function () {
+        return circuitData[CIRCUIT.SENSORS.TEMPERATURE];
     };
 
     ext.getPush = function (buttonIndex) {
         return circuitData[CIRCUIT.BUTTONS[buttonIndex - 1]];
     };
 
-    ext.getSwitch = function (port) {
+    ext.getSwitch = function () {
         //returns switch status
         return circuitData[CIRCUIT.SWITCH];
     };
@@ -318,10 +328,6 @@
     };
 
 
-    function mock() {
-        return false;
-    }
-
     //ext.when = function (b) {
     //    return b;
     //};
@@ -334,21 +340,16 @@
         setNeopixels(["#9400D3", "#0000FF", "#00FF00", "#FFFF00", "#FF0000", "#FF0000", "#FFFF00", "#00FF00", "#0000FF", "#9400D3"], 200);
     };
 
-    ext.turnLedOff = function (ledIndex) {
-        setNeopixel(ledIndex - 1, '#000000');
-    };
-
-    ext.setLed = function (ledIndex, color) {
-        var hex = decimalColorToHex(color);
-        setNeopixel(ledIndex - 1, hex);
+    ext.turnLedOff = function (lednum) {
+        setNeopixelHex(lednum - 1, '#000000');
     };
 
     ext.isNoise = function () {
-        return (ext.getSound() > 50);
+        return (ext.getLoudness() > 50);
     };
 
     ext.isDark = function () {
-        return (ext.getLight() < 20);
+        return (ext.getBrightness() < 20);
     };
 
 
@@ -362,7 +363,8 @@
         id: "0",
         blocks: [
             //['h', 'when %b', 'when', false],
-            ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1]
+            ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
+            ['b', 'shaking?', 'isShaking']
         ],
         menus: {buttons: [1, 2]}
     };
@@ -372,10 +374,9 @@
         blocks: [
             [' ', 'play rainbow', 'rainbow'],
             [' ', 'turn led %n off', 'turnLedOff', 1],
-            [' ', 'set led %n to %c', 'setLed', 1, '#ff0000'],
+            [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
             ['b', 'noise?', 'isNoise'],
-            ['b', 'dark?', 'isDark'],
-            ['b', 'shaking?', 'isShaking']
+            ['b', 'dark?', 'isDark']
         ],
         menus: {
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -389,23 +390,20 @@
         blocks: [
             ['b', 'digital pin %n on ?', 'mock', 6],
             ['r', 'analog pin %n', 'mock', 6],
-            ['r', 'accelerometer %m.axis', 'mock', 'x'],
-            ['r', 'loudness', 'mock'],
-            ['r', 'brightness', 'mock'],
-            ['r', 'tempreture', 'mock'],
+            ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
+            ['r', 'loudness', 'getLoudness'],
+            ['r', 'brightness', 'getBrightness'],
+            ['r', 'temperature', 'getTemperature'],
 
-            [' ', 'set let %n to ( R:%n , G:%n , B:%n )', 'mock', 1, 255, 0, 0],
+            [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0],
             [' ', 'set digital pin %n to %b', 'mock', 6, 'on'],
-            [' ', 'set analog pin %n to %n %', 'mock', 6, 50],
-
-            ['b', 'shaken?', 'mock']
-
+            [' ', 'set analog pin %n to %n %', 'mock', 6, 50]
         ],
         menus: {
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             analog_pins: [6, 9, 10, 12],
             digital_pins: [6, 9, 10, 12],
-            axis: ['x', 'y', 'z'],
+            axis: ['X', 'Y', 'Z'],
             binary: ['on', 'off']
         },
         url: 'http://www.embeditelectronics.com/blog/learn/'
