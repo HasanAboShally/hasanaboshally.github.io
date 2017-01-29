@@ -242,7 +242,6 @@
         hPort.postMessage(report);
     };
 
-
     //ext.when = function (b) {
     //    return b;
     //};
