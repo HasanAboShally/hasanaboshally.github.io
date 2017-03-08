@@ -278,7 +278,7 @@
     // ANALOG
 
     ext.readAnalog = function (pin) {
-        return circuitData[CIRCUIT.ANALOG["pin" + pin]];
+        return circuitData[CIRCUIT.ANALOG["PIN" + pin]];
     };
 
     ext.setAnalogPinRW = function (pin, state) {
@@ -333,7 +333,7 @@
             [' ', 'setup pin %m.analog_servo_pins to %m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
             ['r', 'analog pin %m.analog_pins', 'readAnalog', 9],
             [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90],
-            ['r', '%n to volt', 'analogToVoltage', 90]
+            ['r', 'convert %n (analog) to volt', 'analogToVoltage', 90]
         ],
         menus: {
             buttons: [1, 2],
