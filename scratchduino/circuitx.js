@@ -330,7 +330,7 @@
             //['h', 'when %b', 'when', false],
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
             ['b', 'shaking?', 'isShaking'],
-            [' ', 'setup pin %m.analog_servo_pins to m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
+            [' ', 'setup pin %m.analog_servo_pins to %m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
             ['r', 'analog pin %m.analog_pins', 'readAnalog', 9],
             [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90],
             ['r', '%n to volt', 'analogToVoltage', 90]
