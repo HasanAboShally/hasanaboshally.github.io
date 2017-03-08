@@ -167,6 +167,11 @@
                 Y: 11,
                 Z: 12
             }
+        },
+        ANALOG: {
+            PIN9: 13,
+            PIN10: 14,
+            PIN12: 15
         }
     };
 
@@ -270,6 +275,49 @@
     ext.setNeopixelRGB = setNeopixelRGB;
 
 
+    // ANALOG
+
+    ext.readAnalog = function (pin) {
+        return circuitData[CIRCUIT.ANALOG["pin" + pin]];
+    };
+
+    ext.setAnalogPinRW = function (pin, state) {
+
+        var servo_num = (pin == 9) ? 1 : 2; // Servo#1 is on pin#9 , Servo#2 is on pin#10
+        var servo_setup = (state == 'read') ? 0 : 1; // 0:read , 1:servo
+
+        var report = {
+            message: "s".charCodeAt(0),
+            servo_num: servo_num,
+            servo_setup: servo_setup
+        };
+
+        hPort.postMessage(report);
+
+    };
+
+    ext.setServo = function (pin, angle) {
+
+        var servo_num = (pin == 9) ? 1 : 2; // Servo#1 is on pin#9 , Servo#2 is on pin#10
+        angle %= 180;
+
+        var report = {
+            message: "S".charCodeAt(0),
+            servo_num: servo_num,
+            angle: angle
+        };
+        hPort.postMessage(report);
+
+    };
+
+    ext.analogToVoltage = function (analog) {
+
+        var volt = analog * 0.01294;//convert to 0 to 3.3v value
+        volt = +analog_value.toFixed(2);
+
+        return volt;
+    };
+
     var environments = {
         "en": {
             levels: []
@@ -281,9 +329,18 @@
         blocks: [
             //['h', 'when %b', 'when', false],
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
-            ['b', 'shaking?', 'isShaking']
+            ['b', 'shaking?', 'isShaking'],
+            [' ', 'setup pin %m.analog_servo_pins to m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
+            ['r', 'analog pin %m.analog_pins', 'readAnalog', 9],
+            [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90],
+            ['r', '%n to volt', 'analogToVoltage', 90]
         ],
-        menus: {buttons: [1, 2]}
+        menus: {
+            buttons: [1, 2],
+            analog_pins: [9, 10, 12],
+            analog_servo_pins: [9, 10],
+            analog_pin_state: ['read', 'servo']
+        }
     };
 
     environments.en.levels[0] = {
@@ -293,7 +350,11 @@
             [' ', 'turn led %n off', 'turnLedOff', 1],
             [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
             ['b', 'noise?', 'isNoise'],
-            ['b', 'dark?', 'isDark']
+            ['b', 'dark?', 'isDark'],
+            ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
+            ['r', 'loudness', 'getLoudness'],
+            ['r', 'brightness', 'getBrightness'],
+            ['r', 'temperature', 'getTemperature']
         ],
         menus: {
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -305,21 +366,11 @@
     environments.en.levels[1] = {
         id: "2",
         blocks: [
-            ['b', 'digital pin %n on ?', 'mock', 6],
-            ['r', 'analog pin %n', 'mock', 6],
-            ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
-            ['r', 'loudness', 'getLoudness'],
-            ['r', 'brightness', 'getBrightness'],
-            ['r', 'temperature', 'getTemperature'],
-
             [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0],
-            [' ', 'set digital pin %n to %b', 'mock', 6, 'on'],
-            [' ', 'set analog pin %n to %n %', 'mock', 6, 50]
         ],
         menus: {
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            analog_pins: [6, 9, 10, 12],
-            digital_pins: [6, 9, 10, 12],
+            analog_pins: [9, 10, 12],
             axis: ['X', 'Y', 'Z'],
             binary: ['on', 'off']
         },
