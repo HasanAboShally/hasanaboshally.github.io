@@ -336,19 +336,19 @@
 
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
 
-            ['h', '███ LEDS ███████████████', 'useless'],
+            ['h', '--- LEDS ---------------', 'useless'],
             [' ', 'play rainbow', 'rainbow'],
             [' ', 'turn led %n off', 'turnLedOff', 1],
             [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
 
-            ['h', '███ ON BOARD SENSORS ███', 'useless'],
+            ['h', '--- ON BOARD SENSORS ---', 'useless'],
             ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
             ['r', 'loudness', 'getLoudness'],
             ['r', 'brightness', 'getBrightness'],
             ['r', 'temperature', 'getTemperature'],
             ['b', 'shaking?', 'isShaking'],
 
-            ['h', '███ ANALOG & SERVO █████', 'useless'],
+            ['h', '--- ANALOG & SERVO -----', 'useless'],
             [' ', 'setup pin %m.analog_servo_pins to %m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
             ['r', 'analog pin %m.analog_pins', 'readAnalog', 9],
             [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90]
@@ -379,7 +379,7 @@
     environments.en.levels[1] = {
         id: "2",
         blocks: [
-            ['h', '███ ADVANCED ██████████', 'useless'],
+            ['h', '--- ADVANCED ----------', 'useless'],
             [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0]
         ],
         menus: {},
