@@ -324,30 +324,30 @@
     };
 
     var environments = {
-        "en": {
+        he: {
             levels: []
         }
     };
 
-    environments.en.root_level = {
+    environments.he.root_level = {
         id: "0",
         blocks: [
 
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
 
-            ['r', '▀▀▀▀▀▀ LEDS ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀', 'useless'],
+            ['h', '███ LEDS ███████████████', 'useless'],
             [' ', 'play rainbow', 'rainbow'],
             [' ', 'turn led %n off', 'turnLedOff', 1],
             [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
 
-            ['r', '▀▀▀▀▀▀ ON BOARD SENSORS ▀▀▀▀▀▀', 'useless'],
+            ['h', '███ ON BOARD SENSORS ███', 'useless'],
             ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
             ['r', 'loudness', 'getLoudness'],
             ['r', 'brightness', 'getBrightness'],
             ['r', 'temperature', 'getTemperature'],
             ['b', 'shaking?', 'isShaking'],
 
-            ['r', '▀▀▀▀▀▀ ANALOG & SERVO ▀▀▀▀▀▀▀▀', 'useless'],
+            ['h', '███ ANALOG & SERVO █████', 'useless'],
             [' ', 'setup pin %m.analog_servo_pins to %m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
             ['r', 'analog pin %m.analog_pins', 'readAnalog', 9],
             [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90]
@@ -368,17 +368,17 @@
         }
     };
 
-    environments.en.levels[0] = {
+    environments.he.levels[0] = {
         id: "1",
         blocks: [],
         menus: {},
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
 
-    environments.en.levels[1] = {
+    environments.he.levels[1] = {
         id: "2",
         blocks: [
-            ['r', '▀▀▀▀▀▀ ADVANCED ▀▀▀▀▀▀▀▀', 'useless'],
+            ['h', '███ ADVANCED ██████████', 'useless'],
             [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0]
         ],
         menus: {},
