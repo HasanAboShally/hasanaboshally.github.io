@@ -128,7 +128,7 @@
 
         for (var i = 0; i < hexArray.length; i++) {
 
-            hex = hexArray[i];
+            var hex = hexArray[i];
 
             if (isOff(hex)) {
                 offs++;
@@ -141,6 +141,11 @@
         }
 
 
+    }
+
+    function normalizeAnalog(value) {
+        // value is between 0 and 255
+        return value * 100 / 255;
     }
 
     //getters for sensor information
@@ -176,40 +181,29 @@
     };
 
 
-    ext.getTemp = function (deg) {
-
-        function toCelsius(f) {
-            return Math.round((f - 32) * 0.555);
-        }
-
-        var temp = circuitData[CIRCUIT.SENSORS.TEMPERATURE];
-
-        return deg == '°F' ? temp : toCelsius(temp);
-    };
-
     ext.getLoudness = function () {
-        return circuitData[CIRCUIT.SENSORS.MICROPHONE];
+        return normalizeAnalog(circuitData[CIRCUIT.SENSORS.MICROPHONE]);
     };
 
     ext.getBrightness = function () {
-        return circuitData[CIRCUIT.SENSORS.LIGHT];
+        return normalizeAnalog(circuitData[CIRCUIT.SENSORS.LIGHT]);
     };
 
     ext.getTemperature = function () {
-        return circuitData[CIRCUIT.SENSORS.TEMPERATURE];
+        return normalizeAnalog(circuitData[CIRCUIT.SENSORS.TEMPERATURE]);
     };
 
     ext.getPush = function (buttonIndex) {
         return circuitData[CIRCUIT.BUTTONS[buttonIndex - 1]];
     };
 
+    ext.getAcc = function (axis) {
+        return normalizeAnalog(circuitData[CIRCUIT.SENSORS.ACCELEROMETER[axis]]);
+    };
+
     ext.getSwitch = function () {
         //returns switch status
         return circuitData[CIRCUIT.SWITCH];
-    };
-
-    ext.getAcc = function (axis) {
-        return circuitData[CIRCUIT.SENSORS.ACCELEROMETER[axis]];
     };
 
     ext.getCap = function (port) {
@@ -263,6 +257,10 @@
         setNeopixelHex(lednum, '#000000');
     };
 
+    ext.turnAllLedsOff = function () {
+        setNeopixels(["#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"], 200);
+    };
+
     ext.isNoise = function () {
         return (ext.getLoudness() > 50);
     };
@@ -278,7 +276,7 @@
     // ANALOG
 
     ext.readAnalog = function (pin) {
-        return circuitData[CIRCUIT.ANALOG["PIN" + pin]];
+        return normalizeAnalog(circuitData[CIRCUIT.ANALOG["PIN" + pin]]);
     };
 
     ext.setAnalogPinRW = function (pin, state) {
@@ -336,19 +334,21 @@
 
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
 
-            ['b', '--- LEDS ---------------', 'useless'],
-            [' ', 'play rainbow', 'rainbow'],
-            [' ', 'turn led %n off', 'turnLedOff', 1],
+            ['b', '%m.CATEGORY_TITLE_LEDS', 'useless', '--- LEDS ---------------'],
             [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
+            [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0],
+            [' ', 'turn led %n off', 'turnLedOff', 1],
+            [' ', 'turn all leds off', 'turnAllLedsOff'],
+            [' ', 'play rainbow', 'rainbow'],
 
-            ['b', '--- ON BOARD SENSORS ---', 'useless'],
+            ['b', '%m.CATEGORY_TITLE_SENSORS', 'useless', '--- ON BOARD SENSORS ---'],
             ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
             ['r', 'loudness', 'getLoudness'],
             ['r', 'brightness', 'getBrightness'],
             ['r', 'temperature', 'getTemperature'],
             ['b', 'shaking?', 'isShaking'],
 
-            ['b', '--- ANALOG & SERVO -----', 'useless'],
+            ['b', '%m.CATEGORY_TITLE_ANALOG_SERVO', 'useless', '--- ANALOG & SERVO -----'],
             [' ', 'setup pin %m.analog_servo_pins to %m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
             ['r', 'analog pin %m.analog_pins', 'readAnalog', 9],
             [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90]
@@ -365,7 +365,10 @@
             analog_servo_pins: [9, 10],
             analog_pin_state: ['read', 'servo'],
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            digital: ['on', 'off']
+            digital: ['on', 'off'],
+            CATEGORY_TITLE_LEDS: ['--- LEDS ---------------'],
+            CATEGORY_TITLE_SENSORS: ['--- ON BOARD SENSORS ---'],
+            CATEGORY_TITLE_ANALOG_SERVO: ['--- ANALOG & SERVO -----']
         }
     };
 
