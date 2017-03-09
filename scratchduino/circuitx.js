@@ -306,6 +306,7 @@
             servo_num: servo_num,
             angle: angle
         };
+
         hPort.postMessage(report);
 
     };
@@ -324,12 +325,12 @@
     };
 
     var environments = {
-        he: {
+        "en": {
             levels: []
         }
     };
 
-    environments.he.root_level = {
+    environments.en.root_level = {
         id: "0",
         blocks: [
 
@@ -368,14 +369,14 @@
         }
     };
 
-    environments.he.levels[0] = {
+    environments.en.levels[0] = {
         id: "1",
         blocks: [],
         menus: {},
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
 
-    environments.he.levels[1] = {
+    environments.en.levels[1] = {
         id: "2",
         blocks: [
             ['h', '███ ADVANCED ██████████', 'useless'],
