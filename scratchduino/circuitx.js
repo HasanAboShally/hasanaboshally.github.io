@@ -318,6 +318,11 @@
         return volt;
     };
 
+
+    ext.useless = function () {
+        return "NOT FOR USAGE";
+    };
+
     var environments = {
         "en": {
             levels: []
@@ -327,53 +332,56 @@
     environments.en.root_level = {
         id: "0",
         blocks: [
-            //['h', 'when %b', 'when', false],
+
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
+
+            ['r', '▀▀▀▀▀▀ LEDS ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀', 'useless'],
+            [' ', 'play rainbow', 'rainbow'],
+            [' ', 'turn led %n off', 'turnLedOff', 1],
+            [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
+
+            ['r', '▀▀▀▀▀▀ ON BOARD SENSORS ▀▀▀▀▀▀', 'useless'],
+            ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
+            ['r', 'loudness', 'getLoudness'],
+            ['r', 'brightness', 'getBrightness'],
+            ['r', 'temperature', 'getTemperature'],
             ['b', 'shaking?', 'isShaking'],
+
+            ['r', '▀▀▀▀▀▀ ANALOG & SERVO ▀▀▀▀▀▀▀▀', 'useless'],
             [' ', 'setup pin %m.analog_servo_pins to %m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
             ['r', 'analog pin %m.analog_pins', 'readAnalog', 9],
-            [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90],
-            ['r', 'convert %n (analog) to volt', 'analogToVoltage', 90]
+            [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90]
+
+            //['r', 'convert %n (analog) to volt', 'analogToVoltage', 90],
+
+            //['b', 'noise?', 'isNoise'],
+            //['b', 'dark?', 'isDark'],
+
         ],
         menus: {
             buttons: [1, 2],
             analog_pins: [9, 10, 12],
             analog_servo_pins: [9, 10],
-            analog_pin_state: ['read', 'servo']
+            analog_pin_state: ['read', 'servo'],
+            leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            digital: ['on', 'off']
         }
     };
 
     environments.en.levels[0] = {
         id: "1",
-        blocks: [
-            [' ', 'play rainbow', 'rainbow'],
-            [' ', 'turn led %n off', 'turnLedOff', 1],
-            [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
-            ['b', 'noise?', 'isNoise'],
-            ['b', 'dark?', 'isDark'],
-            ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
-            ['r', 'loudness', 'getLoudness'],
-            ['r', 'brightness', 'getBrightness'],
-            ['r', 'temperature', 'getTemperature']
-        ],
-        menus: {
-            leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            digital: ['on', 'off']
-        },
+        blocks: [],
+        menus: {},
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
 
     environments.en.levels[1] = {
         id: "2",
         blocks: [
-            [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0],
+            ['r', '▀▀▀▀▀▀ ADVANCED ▀▀▀▀▀▀▀▀', 'useless'],
+            [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0]
         ],
-        menus: {
-            leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            analog_pins: [9, 10, 12],
-            axis: ['X', 'Y', 'Z'],
-            binary: ['on', 'off']
-        },
+        menus: {},
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
 
