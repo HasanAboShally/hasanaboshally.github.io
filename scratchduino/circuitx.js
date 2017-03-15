@@ -144,8 +144,8 @@
     }
 
     function normalizeAnalog(value) {
-        // value is between 0 and 255
-        return value * 100 / 255;
+        // the given value is between 0 and 255
+        return (value * 100 / 255).toFixed(2);
     }
 
     //getters for sensor information
