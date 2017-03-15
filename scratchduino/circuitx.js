@@ -271,6 +271,7 @@
 
 
     ext.setNeopixelRGB = setNeopixelRGB;
+    ext.setNeopixelColor = setNeopixelColor;
 
 
     // ANALOG
