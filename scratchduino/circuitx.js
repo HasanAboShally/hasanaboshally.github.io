@@ -335,21 +335,21 @@
 
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
 
-            ['b', '%m.CATEGORY_TITLE_LEDS', 'useless', '--- LEDS ---------------'],
+            //['b', '%m.CATEGORY_TITLE_LEDS', 'useless', '--- LEDS ---------------'],
             [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
             [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0],
             [' ', 'turn led %n off', 'turnLedOff', 1],
             [' ', 'turn all leds off', 'turnAllLedsOff'],
             [' ', 'play rainbow', 'rainbow'],
 
-            ['b', '%m.CATEGORY_TITLE_SENSORS', 'useless', '--- ON BOARD SENSORS ---'],
+            //['b', '%m.CATEGORY_TITLE_SENSORS', 'useless', '--- ON BOARD SENSORS ---'],
             ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
             ['r', 'loudness', 'getLoudness'],
             ['r', 'brightness', 'getBrightness'],
             ['r', 'temperature', 'getTemperature'],
             ['b', 'shaking?', 'isShaking'],
 
-            ['b', '%m.CATEGORY_TITLE_ANALOG_SERVO', 'useless', '--- ANALOG & SERVO -----'],
+            //['b', '%m.CATEGORY_TITLE_ANALOG_SERVO', 'useless', '--- ANALOG & SERVO -----'],
             [' ', 'setup pin %m.analog_servo_pins to %m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
             ['r', 'analog pin %m.analog_pins', 'readAnalog', 9],
             [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90]
@@ -367,9 +367,9 @@
             analog_pin_state: ['read', 'servo'],
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             digital: ['on', 'off'],
-            CATEGORY_TITLE_LEDS: ['--- LEDS ---------------'],
-            CATEGORY_TITLE_SENSORS: ['--- ON BOARD SENSORS ---'],
-            CATEGORY_TITLE_ANALOG_SERVO: ['--- ANALOG & SERVO -----']
+            //CATEGORY_TITLE_LEDS: ['--- LEDS ---------------'],
+            //CATEGORY_TITLE_SENSORS: ['--- ON BOARD SENSORS ---'],
+            //CATEGORY_TITLE_ANALOG_SERVO: ['--- ANALOG & SERVO -----']
         }
     };
 
@@ -383,7 +383,7 @@
     environments.en.levels[1] = {
         id: "2",
         blocks: [
-            ['b', '--- ADVANCED ----------', 'useless'],
+            //['b', '--- ADVANCED ----------', 'useless'],
             [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0]
         ],
         menus: {},
