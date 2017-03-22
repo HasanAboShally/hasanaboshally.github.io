@@ -104,16 +104,18 @@
 
     function setNeopixelRGB(lednum, r, g, b) {
 
-        // adding timeout to allow the hPort to process.
-        setTimeout(function () {
-            hPort.postMessage({
-                message: "O".charCodeAt(0),
-                lednum: lednum,
-                red: r,
-                green: g,
-                blue: b
-            });
-        }, 100);
+        //adding timeout to allow the hPort to process.
+        //setTimeout(function () {
+
+        hPort.postMessage({
+            message: "O".charCodeAt(0),
+            lednum: lednum,
+            red: r,
+            green: g,
+            blue: b
+        });
+
+        //}, 100);
     }
 
     function setNeopixelHex(lednum, hex) {
@@ -136,7 +138,7 @@
 
             if (isOff(hex)) {
                 offs++;
-                setNeopixelHex(i, hex);
+                setTimeout(setNeopixelHex, 0, i, hex);
             }
             else {
                 var _interval = (i + 1 - offs) * interval; // wait interval also before the first led
