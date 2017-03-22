@@ -216,9 +216,9 @@
         return circuitData[port] > CAP_THRESHOLD;
     };
 
-    //ext.when = function (b) {
-    //    return b;
-    //};
+    ext.when = function (b) {
+        return b();
+    };
 
     ext.isButtonPressed = function (buttonIndex) {
         return ext.getPush(buttonIndex);
@@ -287,6 +287,9 @@
     environments.en.root_level = {
         id: "0",
         blocks: [
+
+            ['h', 'button %m.buttons pressed', 'isButtonPressed', 1],
+            ['h', 'when', 'when %b'],
 
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
 
