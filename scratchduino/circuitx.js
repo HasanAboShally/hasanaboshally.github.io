@@ -125,7 +125,7 @@
         });
 
         console.log("setNeopixelRGB: " + lednum);
-        wait(100);
+        //wait(100);
         //}, 100);
     }
 
@@ -275,8 +275,7 @@
     ext.turnAllLedsOff = function () {
 
         for (var i = 0; i < 10; i++) {
-            setNeopixelHex(lednum, '#000000');
-
+            setNeopixelHex(i, '#000000');
         }
 
     };
