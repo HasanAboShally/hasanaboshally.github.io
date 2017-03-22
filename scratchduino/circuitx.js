@@ -260,12 +260,26 @@
     ext.turnAllLedsOff = function () {
 
 
-        for (var i = 0; i < 10; i++) {
+        //for (var i = 0; i < 10; i++) {
+        //
+        //    setTimeout(function () {
+        //        setNeopixelHex(i, '#000000')
+        //    }, 0);
+        //}
 
-            setTimeout(function () {
-                setNeopixelHex(i, '#000000')
-            }, 0);
-        }
+        setNeopixelHex(0, '#000000');
+        setNeopixelHex(1, '#000000');
+        setNeopixelHex(2, '#000000');
+        setNeopixelHex(3, '#000000');
+        setNeopixelHex(4, '#000000');
+        setNeopixelHex(5, '#000000');
+        setNeopixelHex(6, '#000000');
+        setNeopixelHex(7, '#000000');
+        setNeopixelHex(8, '#000000');
+        setNeopixelHex(9, '#000000');
+
+
+
         //
         //
         //for (var i = 0; i < 10; i++) {
