@@ -278,19 +278,6 @@
 
     };
 
-    ext.analogToVoltage = function (analog) {
-
-        var volt = analog * 0.01294;//convert to 0 to 3.3v value
-        volt = +analog_value.toFixed(2);
-
-        return volt;
-    };
-
-
-    ext.useless = function () {
-        return "NOT FOR USAGE";
-    };
-
     var environments = {
         "en": {
             levels: []
