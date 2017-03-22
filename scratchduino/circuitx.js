@@ -103,13 +103,17 @@
     }
 
     function setNeopixelRGB(lednum, r, g, b) {
-        hPort.postMessage({
-            message: "O".charCodeAt(0),
-            lednum: lednum,
-            red: r,
-            green: g,
-            blue: b
-        });
+
+        // adding timeout of 10 milliseconds to allow the hPort to process.
+        setTimeout(function () {
+            hPort.postMessage({
+                message: "O".charCodeAt(0),
+                lednum: lednum,
+                red: r,
+                green: g,
+                blue: b
+            });
+        }, 10);
     }
 
     function setNeopixelHex(lednum, hex) {
