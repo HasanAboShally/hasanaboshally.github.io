@@ -267,7 +267,7 @@
         //    }, 0);
         //}
 
-        setNeopixelHex(0, '#000000');
+          setNeopixelHex(0, '#000000');
         setNeopixelHex(1, '#000000');
         setNeopixelHex(2, '#000000');
         setNeopixelHex(3, '#000000');
