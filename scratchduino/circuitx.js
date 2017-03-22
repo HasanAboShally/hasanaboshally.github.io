@@ -249,9 +249,9 @@
         return ext.getPush(buttonIndex);
     };
 
-    //ext.rainbow = function () {
-    //    setNeopixels(["#9400D3", "#0000FF", "#00FF00", "#FFFF00", "#FF0000", "#FF0000", "#FFFF00", "#00FF00", "#0000FF", "#9400D3"], 200);
-    //};
+    ext.rainbow = function () {
+        setNeopixels(["#9400D3", "#0000FF", "#00FF00", "#FFFF00", "#FF0000", "#FF0000", "#FFFF00", "#00FF00", "#0000FF", "#9400D3"], 200);
+    };
 
     ext.turnLedOff = function (lednum) {
         setNeopixelHex(lednum, '#000000');
@@ -352,7 +352,7 @@
             [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0],
             [' ', 'turn led %n off', 'turnLedOff', 1],
             [' ', 'turn all leds off', 'turnAllLedsOff'],
-            //[' ', 'play rainbow', 'rainbow'],
+            [' ', 'play rainbow', 'rainbow'],
 
             //['b', '%m.CATEGORY_TITLE_SENSORS', 'useless', '--- ON BOARD SENSORS ---'],
             ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
