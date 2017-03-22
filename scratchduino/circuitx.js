@@ -98,6 +98,15 @@
     };
 
 
+    function wait(ms) {
+        var start = new Date().getTime();
+        var end = start;
+        while (end < start + ms) {
+            end = new Date().getTime();
+        }
+    }
+
+
     function isOff(hex) {
         return hex == "#000000";
     }
@@ -115,6 +124,8 @@
             blue: b
         });
 
+        console.log("setNeopixelRGB: " + lednum);
+        wait(100);
         //}, 100);
     }
 
@@ -261,9 +272,14 @@
         setNeopixelHex(lednum, '#000000');
     };
 
-    //ext.turnAllLedsOff = function () {
-    //    setNeopixels(["#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"], 100);
-    //};
+    ext.turnAllLedsOff = function () {
+
+        for (var i = 0; i < 10; i++) {
+            setNeopixelHex(lednum, '#000000');
+
+        }
+
+    };
 
     //ext.isNoise = function () {
     //    return (ext.getLoudness() > 50);
@@ -343,7 +359,7 @@
             [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
             [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0],
             [' ', 'turn led %n off', 'turnLedOff', 1],
-            //[' ', 'turn all leds off', 'turnAllLedsOff'],
+            [' ', 'turn all leds off', 'turnAllLedsOff'],
             //[' ', 'play rainbow', 'rainbow'],
 
             //['b', '%m.CATEGORY_TITLE_SENSORS', 'useless', '--- ON BOARD SENSORS ---'],
