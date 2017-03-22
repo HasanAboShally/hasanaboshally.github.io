@@ -367,6 +367,7 @@
             analog_pin_state: ['read', 'servo'],
             leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             digital: ['on', 'off'],
+            axis:['X','Y','Z']
             //CATEGORY_TITLE_LEDS: ['--- LEDS ---------------'],
             //CATEGORY_TITLE_SENSORS: ['--- ON BOARD SENSORS ---'],
             //CATEGORY_TITLE_ANALOG_SERVO: ['--- ANALOG & SERVO -----']
