@@ -104,7 +104,7 @@
 
     function setNeopixelRGB(lednum, r, g, b) {
 
-        // adding timeout of 10 milliseconds to allow the hPort to process.
+        // adding timeout to allow the hPort to process.
         setTimeout(function () {
             hPort.postMessage({
                 message: "O".charCodeAt(0),
@@ -113,7 +113,7 @@
                 green: g,
                 blue: b
             });
-        }, 10);
+        }, 100);
     }
 
     function setNeopixelHex(lednum, hex) {
@@ -254,7 +254,7 @@
     };
 
     ext.rainbow = function () {
-        setNeopixels(["#9400D3", "#0000FF", "#00FF00", "#FFFF00", "#FF0000", "#FF0000", "#FFFF00", "#00FF00", "#0000FF", "#9400D3"], 200);
+        setNeopixels(["#9400D3", "#0000FF", "#00FF00", "#FFFF00", "#FF0000", "#FF0000", "#FFFF00", "#00FF00", "#0000FF", "#9400D3"], 100);
     };
 
     ext.turnLedOff = function (lednum) {
@@ -262,7 +262,7 @@
     };
 
     ext.turnAllLedsOff = function () {
-        setNeopixels(["#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"], 200);
+        setNeopixels(["#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"], 100);
     };
 
     //ext.isNoise = function () {
