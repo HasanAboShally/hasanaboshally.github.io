@@ -289,7 +289,7 @@
         blocks: [
 
             ['h', 'button %m.buttons pressed', 'isButtonPressed', 1],
-            ['h', 'when', 'when %b'],
+            ['h', 'when %b', 'when'],
 
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
 
