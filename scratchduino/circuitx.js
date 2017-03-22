@@ -257,10 +257,14 @@
         setNeopixelHex(lednum, '#000000');
     };
 
-    ext.turnAllLedsOff = function () {
+    function _turnAllLedsOff() {
         for (var i = 0; i < 10; i++) {
             ext.turnLedOff(i);
         }
+    }
+
+    ext.turnAllLedsOff = function () {
+        _turnAllLedsOff();
     };
 
     ext.isNoise = function () {
