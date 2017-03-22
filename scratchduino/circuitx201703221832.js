@@ -7,44 +7,17 @@
     var isDuo;
     //sensor info
     var circuitData = new Array(32);
+    //when a new message is recieved, save all the info
+
+
     // currently the chrome app is not working on mac, so I use this to mock the circuitData
     circuitData = [3, 4, 3, 11, 13, 83, 80, 0, 0, 1, 212, 56, 102, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null];
-
-    //getters for sensor information
-    /*Capsense x4	0-3
-     Light			4
-     Microphone		5
-     Temperature		6
-     Pushbutton x2	7,8
-     Switch			9
-     Acc x3			10,11,12
-     */
-
-    var CIRCUIT = {
-        SWITCH: 9,
-        CAPSENSE: [0, 1, 2, 3],
-        BUTTONS: [7, 8],
-        SENSORS: {
-            LIGHT: 4,
-            MICROPHONE: 5,
-            TEMPERATURE: 6,
-            ACCELEROMETER: {
-                X: 10,
-                Y: 11,
-                Z: 12
-            }
-        },
-        ANALOG: {
-            PIN9: 13,
-            PIN10: 14,
-            PIN12: 15
-        }
-    };
 
 
     //gets the connection status fo the circuit playground
     var getCircuitPlaygroundStatus = function () {
         chrome.runtime.sendMessage(embeditAppID, {message: "STATUS"}, function (response) {
+
 
             //Chrome app not found
             if (response === undefined) {
@@ -78,41 +51,8 @@
         });
     };
 
-
-    ext._getStatus = function () {
-
-        if (currentStatus == 0) {
-
-            if (!elementExists('#app-not-connected-popup')) {
-                var popupElm = "<div id=\'app-not-connected-popup\'\n     style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(0,0,0,0.8);display: flex; justify-content: center; align-items: center;\'>\n\n\n    <div style=\'color:gray;  margin:10%; background:white;border-radius: 4px; box-shadow:0 2px 2px rgba(0,0,0,0.5); text-align: center;\'>\n\n        <header style=\'background: #607D8B; padding: 10px; border-radius: 4px 4px 0 0 \'>\n            <span style=\'color:#ffffff; font-size:150%;\'>App Not Connected</span>\n        </header>\n\n        <div style=\'padding:20px;\'>\n\n            Please\n            <a\n                    href=\'https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf\'\n                    target=\'_blank\'\n                    style=\'background: #4CAF50; color: white; font-weight: bold; text-transform: uppercase; padding: 2px 20px; border-radius: 4px; border-bottom: 2px solid #2E7D32; cursor: pointer;\'>click\n                here</a> to install and launch the <em>Embedit Scratch Connection App</em> and then <strong> check back\n            here.</strong>\n\n            <img src=\"https://media.giphy.com/media/26xBMKr8SJsuikHcI/giphy.gif\"\n                 style=\'display: block;height:100px;margin:20px auto\'>\n\n        </div>\n\n    </div>\n</div>";
-                $('body').append(popupElm);
-            }
-
-            return {status: 1, msg: 'Chrome App Not Connected'};
-        }
-        else {
-
-            // Remove the popup
-            $('#app-not-connected-popup').remove();
-
-            if (currentStatus == 1)
-                return {status: 1, msg: 'Circuit Playground Not Connected'};
-
-            if (currentStatus == 2)
-                return {status: 2, msg: 'Connected'};
-        }
-    };
-
-    ext._shutdown = function () {
-        //sends disconnect 
-        var report = {message: "R".charCodeAt(0)};
-        hPort.postMessage(report);
-    };
-
-
     var prevXYZ = {};
     var prevTime = new Date();
-
     ext.isShaking = function () {
 
         var res = false;
@@ -157,7 +97,24 @@
 
     };
 
+
+    function wait(ms) {
+        var start = new Date().getTime();
+        var end = start;
+        while (end < start + ms) {
+            end = new Date().getTime();
+        }
+    }
+
+
+    function isOff(hex) {
+        return hex == "#000000";
+    }
+
     function setNeopixelRGB(lednum, r, g, b) {
+
+        //adding timeout to allow the hPort to process.
+        //setTimeout(function () {
 
         hPort.postMessage({
             message: "O".charCodeAt(0),
@@ -168,7 +125,8 @@
         });
 
         console.log("setNeopixelRGB: " + lednum);
-
+        //wait(100);
+        //}, 100);
     }
 
     function setNeopixelHex(lednum, hex) {
@@ -181,10 +139,62 @@
         setNeopixelHex(lednum, hex);
     }
 
+    //function setNeopixels(hexArray, interval) {
+    //
+    //    var offs = 0;
+    //
+    //    for (var i = 0; i < hexArray.length; i++) {
+    //
+    //        var hex = hexArray[i];
+    //
+    //        if (isOff(hex)) {
+    //            offs++;
+    //            setTimeout(setNeopixelHex, 0, i, hex);
+    //        }
+    //        else {
+    //            var _interval = (i + 1 - offs) * interval; // wait interval also before the first led
+    //            setTimeout(setNeopixelHex, _interval, i, hex);
+    //        }
+    //    }
+    //}
+
     function normalizeAnalog(value) {
         // the given value is between 0 and 255
         return (value * 100 / 255).toFixed(2);
     }
+
+    //getters for sensor information
+
+    /*Capsense x4	0-3
+     Light			4
+     Microphone		5
+     Temperature		6
+     Pushbutton x2	7,8
+     Switch			9
+     Acc x3			10,11,12
+     */
+
+    var CIRCUIT = {
+        SWITCH: 9,
+        CAPSENSE: [0, 1, 2, 3],
+        BUTTONS: [7, 8],
+        SENSORS: {
+            LIGHT: 4,
+            MICROPHONE: 5,
+            TEMPERATURE: 6,
+            ACCELEROMETER: {
+                X: 10,
+                Y: 11,
+                Z: 12
+            }
+        },
+        ANALOG: {
+            PIN9: 13,
+            PIN10: 14,
+            PIN12: 15
+        }
+    };
+
 
     ext.getLoudness = function () {
         return normalizeAnalog(circuitData[CIRCUIT.SENSORS.MICROPHONE]);
@@ -216,6 +226,36 @@
         return circuitData[port] > CAP_THRESHOLD;
     };
 
+    ext._getStatus = function () {
+
+        if (currentStatus == 0) {
+
+            if (!elementExists('#app-not-connected-popup')) {
+                var popupElm = "<div id=\'app-not-connected-popup\'\n     style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(0,0,0,0.8);display: flex; justify-content: center; align-items: center;\'>\n\n\n    <div style=\'color:gray;  margin:10%; background:white;border-radius: 4px; box-shadow:0 2px 2px rgba(0,0,0,0.5); text-align: center;\'>\n\n        <header style=\'background: #607D8B; padding: 10px; border-radius: 4px 4px 0 0 \'>\n            <span style=\'color:#ffffff; font-size:150%;\'>App Not Connected</span>\n        </header>\n\n        <div style=\'padding:20px;\'>\n\n            Please\n            <a\n                    href=\'https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf\'\n                    target=\'_blank\'\n                    style=\'background: #4CAF50; color: white; font-weight: bold; text-transform: uppercase; padding: 2px 20px; border-radius: 4px; border-bottom: 2px solid #2E7D32; cursor: pointer;\'>click\n                here</a> to install and launch the <em>Embedit Scratch Connection App</em> and then <strong> check back\n            here.</strong>\n\n            <img src=\"https://media.giphy.com/media/26xBMKr8SJsuikHcI/giphy.gif\"\n                 style=\'display: block;height:100px;margin:20px auto\'>\n\n        </div>\n\n    </div>\n</div>";
+                $('body').append(popupElm);
+            }
+
+            return {status: 1, msg: 'Chrome App Not Connected'};
+        }
+        else {
+
+            // Remove the popup
+            $('#app-not-connected-popup').remove();
+
+            if (currentStatus == 1)
+                return {status: 1, msg: 'Circuit Playground Not Connected'};
+
+            if (currentStatus == 2)
+                return {status: 2, msg: 'Connected'};
+        }
+    };
+
+    ext._shutdown = function () {
+        //sends disconnect 
+        var report = {message: "R".charCodeAt(0)};
+        hPort.postMessage(report);
+    };
+
     //ext.when = function (b) {
     //    return b;
     //};
@@ -237,10 +277,21 @@
         for (var i = 0; i < 10; i++) {
             setNeopixelHex(i, '#000000');
         }
+
     };
+
+    //ext.isNoise = function () {
+    //    return (ext.getLoudness() > 50);
+    //};
+    //
+    //ext.isDark = function () {
+    //    return (ext.getBrightness() < 20);
+    //};
+
 
     ext.setNeopixelRGB = setNeopixelRGB;
     ext.setNeopixelColor = setNeopixelColor;
+
 
     // ANALOG
 
@@ -303,19 +354,29 @@
 
             ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
 
+            //['b', '%m.CATEGORY_TITLE_LEDS', 'useless', '--- LEDS ---------------'],
             [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
             [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0],
             [' ', 'turn led %n off', 'turnLedOff', 1],
             [' ', 'turn all leds off', 'turnAllLedsOff'],
+            //[' ', 'play rainbow', 'rainbow'],
+
+            //['b', '%m.CATEGORY_TITLE_SENSORS', 'useless', '--- ON BOARD SENSORS ---'],
             ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
             ['r', 'loudness', 'getLoudness'],
             ['r', 'brightness', 'getBrightness'],
             ['r', 'temperature', 'getTemperature'],
             ['b', 'shaking?', 'isShaking'],
-            ['h', 'when shaking', 'isShaking'],
+
+            //['b', '%m.CATEGORY_TITLE_ANALOG_SERVO', 'useless', '--- ANALOG & SERVO -----'],
             [' ', 'setup pin %m.analog_servo_pins to %m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
             ['r', 'analog pin %m.analog_pins', 'readAnalog', 9],
             [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90]
+
+            //['r', 'convert %n (analog) to volt', 'analogToVoltage', 90],
+
+            //['b', 'noise?', 'isNoise'],
+            //['b', 'dark?', 'isDark'],
 
         ],
         menus: {
@@ -323,8 +384,12 @@
             analog_pins: [9, 10, 12],
             analog_servo_pins: [9, 10],
             analog_pin_state: ['read', 'servo'],
+            leds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             digital: ['on', 'off'],
             axis: ['X', 'Y', 'Z']
+            //CATEGORY_TITLE_LEDS: ['--- LEDS ---------------'],
+            //CATEGORY_TITLE_SENSORS: ['--- ON BOARD SENSORS ---'],
+            //CATEGORY_TITLE_ANALOG_SERVO: ['--- ANALOG & SERVO -----']
         }
     };
 
@@ -334,6 +399,17 @@
         menus: {},
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
+
+    environments.en.levels[1] = {
+        id: "2",
+        blocks: [
+            //['b', '--- ADVANCED ----------', 'useless'],
+            [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0]
+        ],
+        menus: {},
+        url: 'http://www.embeditelectronics.com/blog/learn/'
+    };
+
 
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 'en';
