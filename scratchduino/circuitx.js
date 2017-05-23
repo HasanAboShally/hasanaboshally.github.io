@@ -88,6 +88,7 @@
 
                 currentStatus = 1;
             }
+
             // successfully connected
             else if (response.status === true) {
 
