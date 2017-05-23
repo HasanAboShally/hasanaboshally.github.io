@@ -339,11 +339,9 @@
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 'en';
 
-    //var current_level = current_environment.levels[level_param - 1];
+    var strings = LOCALIZATION_STRINGS[lang_param][level_param - 1];
 
-    var strings = LOCALIZATION_STRINGS[lang_param][current_level];
-
-    var env = {
+    var levels = [{
         id: "0",
         blocks: [
             ['h', strings.blocks["whenButtonPressed"], 'isButtonPressed', 1],
@@ -370,7 +368,10 @@
             digital: [strings.menus.digital['on'], strings.menus.digital['off']],
             axis: ['X', 'Y', 'Z']
         }
-    };
+    }];
+
+
+    var currentLevel = levels[level_param - 1];
 
     //environments.en.levels[0] = {
     //    id: "1",
@@ -388,9 +389,9 @@
 
 
     var descriptor = {
-        blocks: env.blocks,
-        menus: env.menus,
-        //url: current_level.url
+        blocks: currentLevel.blocks,
+        menus: currentLevel.menus,
+        url: 'http://www.embeditelectronics.com/blog/learn/'
     };
 
 
