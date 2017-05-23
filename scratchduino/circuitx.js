@@ -308,6 +308,7 @@
                     blocks: {
                         whenButtonPressed: 'button %m.buttons pressed',
                         isButtonPressed: 'button %m.buttons pressed?',
+                        getSwitch: 'switch?',
                         setNeopixelColor: 'set led %n to %c',
                         setNeopixelRGB: 'set led %n to ( R:%n , G:%n , B:%n )',
                         turnLedOff: 'turn led %n off',
@@ -342,6 +343,8 @@
         blocks: [
             ['h', strings.blocks["whenButtonPressed"], 'isButtonPressed', 1],
             ['b', strings.blocks["isButtonPressed"], 'isButtonPressed', 1],
+            ['b', strings.blocks["getSwitch"], 'getSwitch'],
+            [' ', strings.blocks["setNeopixelColor"], 'setNeopixelColor', 1, '#ff0000'],
             [' ', strings.blocks["setNeopixelColor"], 'setNeopixelColor', 1, '#ff0000'],
             [' ', strings.blocks["setNeopixelRGB"], 'setNeopixelRGB', 1, 255, 0, 0],
             [' ', strings.blocks["turnLedOff"], 'turnLedOff', 1],
@@ -367,6 +370,7 @@
     }];
 
     var currentLevel = levels[level_param - 1];
+
 
     //environments.en.levels[0] = {
     //    id: "1",
@@ -401,7 +405,7 @@
         return $(id).length > 0;
     }
 
-    
+
     //convert scratch hex color to rgb for neopixels
     function hexToRgb(hex) {
         // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
