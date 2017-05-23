@@ -187,10 +187,6 @@
         return normalizeAnalog(circuitData[CIRCUIT.SENSORS.TEMPERATURE]);
     };
 
-    ext.getPush = function (buttonIndex) {
-        return circuitData[CIRCUIT.BUTTONS[buttonIndex - 1]];
-    };
-
     ext.getAcc = function (axis) {
         return normalizeAnalog(circuitData[CIRCUIT.SENSORS.ACCELEROMETER[axis]]);
     };
@@ -210,7 +206,7 @@
     };
 
     ext.isButtonPressed = function (buttonIndex) {
-        return ext.getPush(buttonIndex);
+        return circuitData[CIRCUIT.BUTTONS[buttonIndex - 1]];
     };
 
     ext.turnLedOff = function (lednum) {
