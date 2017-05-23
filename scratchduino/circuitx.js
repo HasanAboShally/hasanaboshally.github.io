@@ -339,7 +339,7 @@
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 'en';
 
-    var current_level = current_environment.levels[level_param - 1];
+    //var current_level = current_environment.levels[level_param - 1];
 
     var strings = LOCALIZATION_STRINGS[lang_param][current_level];
 
