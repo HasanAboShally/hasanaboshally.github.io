@@ -370,8 +370,6 @@
         }
     }];
 
-
-
     var currentLevel = levels[level_param - 1];
 
     //environments.en.levels[0] = {
