@@ -7,18 +7,9 @@
     var isDuo;
     //sensor info
     var circuitData = new Array(32);
+
     // currently the chrome app is not working on mac, so I use this to mock the circuitData
     circuitData = [3, 4, 3, 11, 13, 83, 80, 0, 0, 1, 212, 56, 102, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null];
-
-    //getters for sensor information
-    /*Capsense x4	0-3
-     Light			4
-     Microphone		5
-     Temperature		6
-     Pushbutton x2	7,8
-     Switch			9
-     Acc x3			10,11,12
-     */
 
     var CIRCUIT = {
         SWITCH: 9,
@@ -41,6 +32,37 @@
         }
     };
 
+    var prevXYZ = {};
+    var prevTime = new Date();
+
+    function setNeopixelRGB(lednum, r, g, b) {
+
+        hPort.postMessage({
+            message: "O".charCodeAt(0),
+            lednum: lednum,
+            red: r,
+            green: g,
+            blue: b
+        });
+
+        console.log("setNeopixelRGB: " + lednum);
+
+    }
+
+    function setNeopixelHex(lednum, hex) {
+        var color = hexToRgb(hex);
+        setNeopixelRGB(lednum, color.r, color.g, color.b);
+    }
+
+    function setNeopixelColor(lednum, color) {
+        var hex = decimalColorToHex(color);
+        setNeopixelHex(lednum, hex);
+    }
+
+    function normalizeAnalog(value) {
+        // the given value is between 0 and 255
+        return (value * 100 / 255).toFixed(2);
+    }
 
     //gets the connection status fo the circuit playground
     var getCircuitPlaygroundStatus = function () {
@@ -50,7 +72,7 @@
             if (response === undefined) {
                 console.log("Chrome app not found");
                 currentStatus = 0;
-                setTimeout(getCircuitPlaygroundStatus, 2000);
+                //setTimeout(getCircuitPlaygroundStatus, 2000);
                 return;
             }
 
@@ -77,7 +99,7 @@
 
         });
     };
-
+    setInterval(getCircuitPlaygroundStatus, 2000);
 
     ext._getStatus = function () {
 
@@ -108,10 +130,6 @@
         var report = {message: "R".charCodeAt(0)};
         hPort.postMessage(report);
     };
-
-
-    var prevXYZ = {};
-    var prevTime = new Date();
 
     ext.isShaking = function () {
 
@@ -157,35 +175,6 @@
 
     };
 
-    function setNeopixelRGB(lednum, r, g, b) {
-
-        hPort.postMessage({
-            message: "O".charCodeAt(0),
-            lednum: lednum,
-            red: r,
-            green: g,
-            blue: b
-        });
-
-        console.log("setNeopixelRGB: " + lednum);
-
-    }
-
-    function setNeopixelHex(lednum, hex) {
-        var color = hexToRgb(hex);
-        setNeopixelRGB(lednum, color.r, color.g, color.b);
-    }
-
-    function setNeopixelColor(lednum, color) {
-        var hex = decimalColorToHex(color);
-        setNeopixelHex(lednum, hex);
-    }
-
-    function normalizeAnalog(value) {
-        // the given value is between 0 and 255
-        return (value * 100 / 255).toFixed(2);
-    }
-
     ext.getLoudness = function () {
         return normalizeAnalog(circuitData[CIRCUIT.SENSORS.MICROPHONE]);
     };
@@ -224,10 +213,6 @@
         return ext.getPush(buttonIndex);
     };
 
-    //ext.rainbow = function () {
-    //    setNeopixels(["#9400D3", "#0000FF", "#00FF00", "#FFFF00", "#FF0000", "#FF0000", "#FFFF00", "#00FF00", "#0000FF", "#9400D3"], 100);
-    //};
-
     ext.turnLedOff = function (lednum) {
         setNeopixelHex(lednum, '#000000');
     };
@@ -240,6 +225,7 @@
     };
 
     ext.setNeopixelRGB = setNeopixelRGB;
+
     ext.setNeopixelColor = setNeopixelColor;
 
     // ANALOG
@@ -278,71 +264,142 @@
 
     };
 
-    var environments = {
-        "en": {
-            levels: []
+
+    //var root_level = {
+    //
+    //};
+    //
+    //var levels = [
+    //    {
+    //        blocks: [],
+    //        strings: {
+    //            en: [
+    //                'button %m.buttons pressed',
+    //                'button %m.buttons pressed?',
+    //                'set led %n to %c',
+    //                'set led %n to ( R:%n , G:%n , B:%n )',
+    //                'turn led %n off',
+    //                'turn all leds off',
+    //                'accelerometer %m.axis',
+    //                'loudness',
+    //                'brightness',
+    //                'temperature',
+    //                'shaking?',
+    //                'when shaking',
+    //                'setup pin %m.analog_servo_pins to %m.analog_pin_state',
+    //                'analog pin %m.analog_pins',
+    //                'set servo on pin %m.analog_servo_pins to angle %n'
+    //            ]
+    //        }
+    //    }
+    //];
+    //
+    //current_environment
+    //
+    //function setLanguage(langId) {
+    //
+    //    for (var i = 0; i < currentLevel.blocks.length; i++) {
+    //        currentLevel.blocks[i][1] = currentLevel.languages[langId].blocks[i];
+    //    }
+    //
+    //    return currentLevel;
+    //}
+
+    var LOCALIZATION_STRINGS = {
+        en: {
+            levels: [
+                {
+                    blocks: {
+                        whenButtonPressed: 'button %m.buttons pressed',
+                        isButtonPressed: 'button %m.buttons pressed?',
+                        setNeopixelColor: 'set led %n to %c',
+                        setNeopixelRGB: 'set led %n to ( R:%n , G:%n , B:%n )',
+                        turnLedOff: 'turn led %n off',
+                        turnAllLedsOff: 'turn all leds off',
+                        getAcc: 'accelerometer %m.axis',
+                        getLoudness: 'loudness',
+                        getBrightness: 'brightness',
+                        getTemperature: 'temperature',
+                        isShaking: 'shaking?',
+                        whenShaking: 'when shaking',
+                        setAnalogPinRW: 'setup pin %m.analog_servo_pins to %m.analog_pin_state',
+                        readAnalog: 'analog pin %m.analog_pins',
+                        setServo: 'set servo on pin %m.analog_servo_pins to angle %n'
+                    },
+                    menus: {
+                        analog_pin_state: {read: 'read', servo: 'servo'},
+                        digital: {on: 'on', off: 'off'}
+                    }
+                }
+            ]
         }
-    };
 
-    environments.en.root_level = {
-        id: "0",
-        blocks: [
-
-            ['h', 'button %m.buttons pressed', 'isButtonPressed', 1],
-            ['h', 'when %b', 'when'],
-
-            ['b', 'button %m.buttons pressed?', 'isButtonPressed', 1],
-
-            [' ', 'set led %n to %c', 'setNeopixelColor', 1, '#ff0000'],
-            [' ', 'set led %n to ( R:%n , G:%n , B:%n )', 'setNeopixelRGB', 1, 255, 0, 0],
-            [' ', 'turn led %n off', 'turnLedOff', 1],
-            [' ', 'turn all leds off', 'turnAllLedsOff'],
-            ['r', 'accelerometer %m.axis', 'getAcc', 'X'],
-            ['r', 'loudness', 'getLoudness'],
-            ['r', 'brightness', 'getBrightness'],
-            ['r', 'temperature', 'getTemperature'],
-            ['b', 'shaking?', 'isShaking'],
-            ['h', 'when shaking', 'isShaking'],
-            [' ', 'setup pin %m.analog_servo_pins to %m.analog_pin_state', 'setAnalogPinRW', 9, 'servo'],
-            ['r', 'analog pin %m.analog_pins', 'readAnalog', 9],
-            [' ', 'set servo on pin %m.analog_servo_pins to angle %n', 'setServo', 9, 90]
-
-        ],
-        menus: {
-            buttons: [1, 2],
-            analog_pins: [9, 10, 12],
-            analog_servo_pins: [9, 10],
-            analog_pin_state: ['read', 'servo'],
-            digital: ['on', 'off'],
-            axis: ['X', 'Y', 'Z']
-        }
-    };
-
-    environments.en.levels[0] = {
-        id: "1",
-        blocks: [],
-        menus: {},
-        url: 'http://www.embeditelectronics.com/blog/learn/'
     };
 
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 'en';
 
-    var current_environment = environments[lang_param];
     var current_level = current_environment.levels[level_param - 1];
 
+    var strings = LOCALIZATION_STRINGS[lang_param][current_level];
+
+    var env = {
+        id: "0",
+        blocks: [
+            ['h', strings.blocks["whenButtonPressed"], 'isButtonPressed', 1],
+            ['b', strings.blocks["isButtonPressed"], 'isButtonPressed', 1],
+            [' ', strings.blocks["setNeopixelColor"], 'setNeopixelColor', 1, '#ff0000'],
+            [' ', strings.blocks["setNeopixelRGB"], 'setNeopixelRGB', 1, 255, 0, 0],
+            [' ', strings.blocks["turnLedOff"], 'turnLedOff', 1],
+            [' ', strings.blocks["turnAllLedsOff"], 'turnAllLedsOff'],
+            ['r', strings.blocks["getAcc"], 'getAcc', 'X'],
+            ['r', strings.blocks["getLoudness"], 'getLoudness'],
+            ['r', strings.blocks["getBrightness"], 'getBrightness'],
+            ['r', strings.blocks["getTemperature"], 'getTemperature'],
+            ['h', strings.blocks["whenShaking"], 'isShaking'],
+            ['b', strings.blocks["isShaking"], 'isShaking'],
+            [' ', strings.blocks["setAnalogPinRW"], 'setAnalogPinRW', 9, 'servo'],
+            ['r', strings.blocks["readAnalog"], 'readAnalog', 9],
+            [' ', strings.blocks["setServo"], 'setServo', 9, 90]
+        ],
+        menus: {
+            buttons: [1, 2],
+            analog_pins: [9, 10, 12],
+            analog_servo_pins: [9, 10],
+            analog_pin_state: [strings.menus.analog_pin_state['read'], strings.menus.analog_pin_state['servo']],
+            digital: [strings.menus.digital['on'], strings.menus.digital['off']],
+            axis: ['X', 'Y', 'Z']
+        }
+    };
+
+    //environments.en.levels[0] = {
+    //    id: "1",
+    //    blocks: [],
+    //    menus: {},
+    //    url: 'http://www.embeditelectronics.com/blog/learn/'
+    //};
+
+
+    //var descriptor = {
+    //    blocks: current_environment.root_level.blocks.concat(current_level.blocks),
+    //    menus: Object.assign({}, current_environment.root_level.menus, current_level.menus),
+    //    url: current_level.url
+    //};
+
+
     var descriptor = {
-        blocks: current_environment.root_level.blocks.concat(current_level.blocks),
-        menus: Object.assign({}, current_environment.root_level.menus, current_level.menus),
-        url: current_level.url
+        blocks: env.blocks,
+        menus: env.menus,
+        //url: current_level.url
     };
 
 
-    setInterval(getCircuitPlaygroundStatus, 2000);
     ScratchExtensions.register('Circuit Playground', descriptor, ext);
 
 
+    // *********************************************************************************
     // HELPER FUNCTIONS ****************************************************************
+    // *********************************************************************************
 
     function elementExists(id) {
         return $(id).length > 0;
