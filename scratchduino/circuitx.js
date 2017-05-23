@@ -64,6 +64,8 @@
         return (value * 100 / 255).toFixed(2);
     }
 
+
+    var isInititalized = false;
     //gets the connection status fo the circuit playground
     var getCircuitPlaygroundStatus = function () {
         chrome.runtime.sendMessage(embeditAppID, {message: "STATUS"}, function (response) {
@@ -73,6 +75,7 @@
                 console.log("Chrome app not found");
                 currentStatus = 0;
                 //setTimeout(getCircuitPlaygroundStatus, 2000);
+                isInititalized = false;
                 return;
             }
 
@@ -81,25 +84,36 @@
                 //console.log("Not connected");
                 //hPort = chrome.runtime.connect(embeditAppID);
                 //hPort.onMessage.addListener(onMsgCircuitPlayground);
+                isInititalized = false;
+
                 currentStatus = 1;
             }
             // successfully connected
             else if (response.status === true) {
-                console.log("Connected");
-                isDuo = response.duo;
-                console.log("isDuo: " + isDuo);
-                hPort = chrome.runtime.connect(embeditAppID);
 
-                hPort.onMessage.addListener(function (msg) {
-                    circuitData = msg;
-                });
+                if (!isInititalized) {
+                    console.log("Connected");
+                    isDuo = response.duo;
+                    console.log("isDuo: " + isDuo);
+                    hPort = chrome.runtime.connect(embeditAppID);
 
-                currentStatus = 2;
+                    hPort.onMessage.addListener(function (msg) {
+                        circuitData = msg;
+                    });
+
+                    currentStatus = 2;
+
+                    isInititalized = true;
+                }
             }
 
         });
     };
-    setInterval(getCircuitPlaygroundStatus, 2000);
+
+    //setInterval(getCircuitPlaygroundStatus, 2000);
+
+
+    getCircuitPlaygroundStatus();
 
     ext._getStatus = function () {
 
