@@ -401,6 +401,7 @@
         return $(id).length > 0;
     }
 
+    
     //convert scratch hex color to rgb for neopixels
     function hexToRgb(hex) {
         // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
