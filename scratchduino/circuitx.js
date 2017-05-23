@@ -339,7 +339,7 @@
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 'en';
 
-    var strings = LOCALIZATION_STRINGS[lang_param][level_param - 1];
+    var strings = LOCALIZATION_STRINGS[lang_param].levels[level_param - 1];
 
     var levels = [{
         id: "0",
@@ -369,6 +369,7 @@
             axis: ['X', 'Y', 'Z']
         }
     }];
+
 
 
     var currentLevel = levels[level_param - 1];
