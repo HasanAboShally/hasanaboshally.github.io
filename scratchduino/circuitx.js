@@ -11,6 +11,9 @@
     // currently the chrome app is not working on mac, so I use this to mock the circuitData
     circuitData = [3, 4, 3, 11, 13, 83, 80, 0, 0, 1, 212, 56, 102, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null];
 
+    var prevXYZ = {};
+    var prevTime = new Date();
+
     var CIRCUIT = {
         SWITCH: 9,
         CAPSENSE: [0, 1, 2, 3],
@@ -32,8 +35,7 @@
         }
     };
 
-    var prevXYZ = {};
-    var prevTime = new Date();
+
 
     function setNeopixelRGB(lednum, r, g, b) {
 
@@ -111,33 +113,36 @@
         });
     };
 
-    //setInterval(getCircuitPlaygroundStatus, 2000);
+    setInterval(getCircuitPlaygroundStatus, 1000);
 
+    // getCircuitPlaygroundStatus();
 
-    getCircuitPlaygroundStatus();
 
     ext._getStatus = function () {
 
-        if (currentStatus == 0) {
+        switch(currentStatus){
+            case 0:{
+                if (!elementExists('#app-not-connected-popup')) {
+                    var popupElm = "<div id=\'app-not-connected-popup\'\n     style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(0,0,0,0.8);display: flex; justify-content: center; align-items: center;\'>\n\n\n    <div style=\'color:gray;  margin:10%; background:white;border-radius: 4px; box-shadow:0 2px 2px rgba(0,0,0,0.5); text-align: center;\'>\n\n        <header style=\'background: #607D8B; padding: 10px; border-radius: 4px 4px 0 0 \'>\n            <span style=\'color:#ffffff; font-size:150%;\'>App Not Connected</span>\n        </header>\n\n        <div style=\'padding:20px;\'>\n\n            Please\n            <a\n                    href=\'https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf\'\n                    target=\'_blank\'\n                    style=\'background: #4CAF50; color: white; font-weight: bold; text-transform: uppercase; padding: 2px 20px; border-radius: 4px; border-bottom: 2px solid #2E7D32; cursor: pointer;\'>click\n                here</a> to install and launch the <em>Embedit Scratch Connection App</em> and then <strong> check back\n            here.</strong>\n\n            <img src=\"https://media.giphy.com/media/26xBMKr8SJsuikHcI/giphy.gif\"\n                 style=\'display: block;height:100px;margin:20px auto\'>\n\n        </div>\n\n    </div>\n</div>";
+                    $('body').append(popupElm);
+                }
 
-            if (!elementExists('#app-not-connected-popup')) {
-                var popupElm = "<div id=\'app-not-connected-popup\'\n     style=\'position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(0,0,0,0.8);display: flex; justify-content: center; align-items: center;\'>\n\n\n    <div style=\'color:gray;  margin:10%; background:white;border-radius: 4px; box-shadow:0 2px 2px rgba(0,0,0,0.5); text-align: center;\'>\n\n        <header style=\'background: #607D8B; padding: 10px; border-radius: 4px 4px 0 0 \'>\n            <span style=\'color:#ffffff; font-size:150%;\'>App Not Connected</span>\n        </header>\n\n        <div style=\'padding:20px;\'>\n\n            Please\n            <a\n                    href=\'https://chrome.google.com/webstore/detail/dbhfnkcnljcbbpocflmbfcobkmagpgpf\'\n                    target=\'_blank\'\n                    style=\'background: #4CAF50; color: white; font-weight: bold; text-transform: uppercase; padding: 2px 20px; border-radius: 4px; border-bottom: 2px solid #2E7D32; cursor: pointer;\'>click\n                here</a> to install and launch the <em>Embedit Scratch Connection App</em> and then <strong> check back\n            here.</strong>\n\n            <img src=\"https://media.giphy.com/media/26xBMKr8SJsuikHcI/giphy.gif\"\n                 style=\'display: block;height:100px;margin:20px auto\'>\n\n        </div>\n\n    </div>\n</div>";
-                $('body').append(popupElm);
+                return {status: 1, msg: 'Chrome App Not Connected'};
             }
 
-            return {status: 1, msg: 'Chrome App Not Connected'};
-        }
-        else {
+            case 1:{
+                 $('#app-not-connected-popup').remove();
+                 return {status: 1, msg: 'Circuit Playground Not Connected'};
+            }
 
-            // Remove the popup
-            $('#app-not-connected-popup').remove();
-
-            if (currentStatus == 1)
-                return {status: 1, msg: 'Circuit Playground Not Connected'};
-
-            if (currentStatus == 2)
+           case 2:{
+                 $('#app-not-connected-popup').remove();
                 return {status: 2, msg: 'Connected'};
+            }
+
+
         }
+
     };
 
     ext._shutdown = function () {
@@ -275,47 +280,6 @@
 
     };
 
-
-    //var root_level = {
-    //
-    //};
-    //
-    //var levels = [
-    //    {
-    //        blocks: [],
-    //        strings: {
-    //            en: [
-    //                'button %m.buttons pressed',
-    //                'button %m.buttons pressed?',
-    //                'set led %n to %c',
-    //                'set led %n to ( R:%n , G:%n , B:%n )',
-    //                'turn led %n off',
-    //                'turn all leds off',
-    //                'accelerometer %m.axis',
-    //                'loudness',
-    //                'brightness',
-    //                'temperature',
-    //                'shaking?',
-    //                'when shaking',
-    //                'setup pin %m.analog_servo_pins to %m.analog_pin_state',
-    //                'analog pin %m.analog_pins',
-    //                'set servo on pin %m.analog_servo_pins to angle %n'
-    //            ]
-    //        }
-    //    }
-    //];
-    //
-    //current_environment
-    //
-    //function setLanguage(langId) {
-    //
-    //    for (var i = 0; i < currentLevel.blocks.length; i++) {
-    //        currentLevel.blocks[i][1] = currentLevel.languages[langId].blocks[i];
-    //    }
-    //
-    //    return currentLevel;
-    //}
-
     var LOCALIZATION_STRINGS = {
         en: {
             levels: [
@@ -384,22 +348,8 @@
         }
     }];
 
+
     var currentLevel = levels[level_param - 1];
-
-
-    //environments.en.levels[0] = {
-    //    id: "1",
-    //    blocks: [],
-    //    menus: {},
-    //    url: 'http://www.embeditelectronics.com/blog/learn/'
-    //};
-
-
-    //var descriptor = {
-    //    blocks: current_environment.root_level.blocks.concat(current_level.blocks),
-    //    menus: Object.assign({}, current_environment.root_level.menus, current_level.menus),
-    //    url: current_level.url
-    //};
 
 
     var descriptor = {
