@@ -320,19 +320,19 @@
             levels: [
                 {
                     blocks: {
-                        whenButtonPressed: ‘عند ضغط الكبسة %m.buttons',
-                        isButtonPressed: ‘هل الكبسة %m.buttons مضغوطة?’,
-                        getSwitch: ‘المفتاح?’,
-                        setNeopixelColor: ‘ غير لون اللامبة %n to %c',
-                        setNeopixelRGB: ’غير لون اللامبة led %n to ( R:%n , G:%n , B:%n )',
-                        turnLedOff: ‘اطفئ اللامبة %n',
-                        turnAllLedsOff: ‘اطفئ جميع اللامبات’,
-                        getAcc: ‘حسّاس التسارع %m.axis',
-                        getLoudness: ‘الصّوت’,
-                        getBrightness: ‘الإضاءة’,
-                        getTemperature: ‘درجة  الحرارة’,
-                        isShaking: ‘اهتزاز?’,
-                        whenShaking: ‘عند الاهتزاز’
+                        whenButtonPressed: 'ar - button %m.buttons pressed',
+                        isButtonPressed: 'ar - button %m.buttons pressed?',
+                        getSwitch: 'ar - switch?',
+                        setNeopixelColor: 'ar - set led %n to %c',
+                        setNeopixelRGB: 'ar - set led %n to ( R:%n , G:%n , B:%n )',
+                        turnLedOff: 'ar - turn led %n off',
+                        turnAllLedsOff: 'ar - turn all leds off',
+                        getAcc: 'ar - accelerometer %m.axis',
+                        getLoudness: 'ar - loudness',
+                        getBrightness: 'ar - brightness',
+                        getTemperature: 'ar - temperature',
+                        isShaking: 'ar - shaking?',
+                        whenShaking: 'ar - when shaking'
                     },
                     menus: {
                         digital: {on: 'on', off: 'off'}
@@ -340,9 +340,9 @@
                 },
                 {
                     blocks: {
-                        setAnalogPinRW: 'setup pin %m.analog_servo_pins to %m.analog_pin_state',
-                        readAnalog: 'analog pin %m.analog_pins',
-                        setServo: 'set servo on pin %m.analog_servo_pins to angle %n'
+                        setAnalogPinRW: 'ar - setup pin %m.analog_servo_pins to %m.analog_pin_state',
+                        readAnalog: 'ar - analog pin %m.analog_pins',
+                        setServo: 'ar - set servo on pin %m.analog_servo_pins to angle %n'
                     },
                     menus: {
                         analog_pin_state: {read: 'read', servo: 'servo'},
