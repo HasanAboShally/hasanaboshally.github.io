@@ -331,8 +331,8 @@
     var strings = LOCALIZATION_STRINGS[lang_param].levels[0];
 
     if(current_level_index > 0){
-    	Object.assign(strings.blocks, LOCALIZATION_STRINGS[lang_param].levels[current_level_index]);
-    	Object.assign(strings.menus, LOCALIZATION_STRINGS[lang_param].menus[current_level_index]);
+    	Object.assign(strings.blocks, LOCALIZATION_STRINGS[lang_param].levels[current_level_index].blocks);
+    	Object.assign(strings.menus, LOCALIZATION_STRINGS[lang_param].levels[current_level_index].menus);
 
     }
 
