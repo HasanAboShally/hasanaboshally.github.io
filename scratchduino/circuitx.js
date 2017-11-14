@@ -323,7 +323,20 @@
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 'en';
 
-    var strings = LOCALIZATION_STRINGS[lang_param].levels[level_param - 1];
+
+    var current_level_index = level_param - 1; // Root level is 0
+
+
+
+    var strings = LOCALIZATION_STRINGS[lang_param].levels[0];
+
+    if(current_level_index > 0){
+    	Object.assign(strings.blocks, LOCALIZATION_STRINGS[lang_param].levels[current_level_index]);
+    	Object.assign(strings.menus, LOCALIZATION_STRINGS[lang_param].menus[current_level_index]);
+
+    }
+
+
 
     var levels = [{
         blocks: [
@@ -366,9 +379,11 @@
 	var menus = levels[0].menus;
 	 
 
-    if(level_param > 1){
-    	blocks = blocks.concat(levels[level_param - 1].blocks);
-    	menus = Object.assign(menus, levels[level_param - 1].menus);
+    if(current_level_index > 0){
+    	//blocks = blocks.concat(levels[current_level_index].blocks);
+
+    	Array.prototype.push.apply(blocks, levels[current_level_index].blocks);
+    	Object.assign(menus, levels[current_level_index].menus);
     }
 
 
