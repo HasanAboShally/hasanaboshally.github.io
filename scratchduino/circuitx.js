@@ -300,6 +300,7 @@
                         whenShaking: 'when shaking'
                     },
                     menus: {
+                        digital: {on: 'on', off: 'off'}
                     }
                 },
                 {
