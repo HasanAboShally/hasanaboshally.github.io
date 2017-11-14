@@ -300,8 +300,6 @@
                         whenShaking: 'when shaking'
                     },
                     menus: {
-                        analog_pin_state: {read: 'read', servo: 'servo'},
-                        digital: {on: 'on', off: 'off'}
                     }
                 },
                 {
@@ -312,7 +310,6 @@
                     },
                     menus: {
                         analog_pin_state: {read: 'read', servo: 'servo'},
-                        digital: {on: 'on', off: 'off'}
                     }
                 }
             ]
@@ -323,9 +320,7 @@
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 'en';
 
-
     var current_level_index = level_param - 1; // Root level is 0
-
 
 
     var strings = LOCALIZATION_STRINGS[lang_param].levels[0];
@@ -375,7 +370,6 @@
 	// Level 0 is the root level
 	var blocks = levels[0].blocks;
 	var menus = levels[0].menus;
-	 
 
     if(current_level_index > 0){
     	//blocks = blocks.concat(levels[current_level_index].blocks);
@@ -383,7 +377,6 @@
     	Array.prototype.push.apply(blocks, levels[current_level_index].blocks);
     	Object.assign(menus, levels[current_level_index].menus);
     }
-
 
     var descriptor = {
         blocks: blocks,
