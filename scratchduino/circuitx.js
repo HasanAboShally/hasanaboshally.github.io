@@ -368,7 +368,7 @@
 
     if(level_param > 1){
     	blocks = blocks.concat(levels[level_param - 1].blocks);
-    	menus = menus.concat(levels[level_param - 1].menus);
+    	menus = Object.assign(menus, levels[level_param - 1].menus);
     }
 
 
