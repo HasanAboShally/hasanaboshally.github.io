@@ -297,7 +297,15 @@
                         getBrightness: 'brightness',
                         getTemperature: 'temperature',
                         isShaking: 'shaking?',
-                        whenShaking: 'when shaking',
+                        whenShaking: 'when shaking'
+                    },
+                    menus: {
+                        analog_pin_state: {read: 'read', servo: 'servo'},
+                        digital: {on: 'on', off: 'off'}
+                    }
+                },
+                {
+                    blocks: {
                         setAnalogPinRW: 'setup pin %m.analog_servo_pins to %m.analog_pin_state',
                         readAnalog: 'analog pin %m.analog_pins',
                         setServo: 'set servo on pin %m.analog_servo_pins to angle %n'
@@ -318,12 +326,10 @@
     var strings = LOCALIZATION_STRINGS[lang_param].levels[level_param - 1];
 
     var levels = [{
-        id: "0",
         blocks: [
             ['h', strings.blocks["whenButtonPressed"], 'isButtonPressed', 1],
             ['b', strings.blocks["isButtonPressed"], 'isButtonPressed', 1],
             ['b', strings.blocks["getSwitch"], 'getSwitch'],
-            [' ', strings.blocks["setNeopixelColor"], 'setNeopixelColor', 1, '#ff0000'],
             [' ', strings.blocks["setNeopixelColor"], 'setNeopixelColor', 1, '#ff0000'],
             [' ', strings.blocks["setNeopixelRGB"], 'setNeopixelRGB', 1, 255, 0, 0],
             [' ', strings.blocks["turnLedOff"], 'turnLedOff', 1],
@@ -334,27 +340,41 @@
             ['r', strings.blocks["getTemperature"], 'getTemperature'],
             ['h', strings.blocks["whenShaking"], 'isShaking'],
             ['b', strings.blocks["isShaking"], 'isShaking'],
+        ],
+        menus: {
+            buttons: [1, 2],
+            digital: [strings.menus.digital['on'], strings.menus.digital['off']],
+            axis: ['X', 'Y', 'Z']
+        }
+    },
+    {
+        blocks: [
             [' ', strings.blocks["setAnalogPinRW"], 'setAnalogPinRW', 9, 'servo'],
             ['r', strings.blocks["readAnalog"], 'readAnalog', 9],
             [' ', strings.blocks["setServo"], 'setServo', 9, 90]
         ],
         menus: {
-            buttons: [1, 2],
             analog_pins: [9, 10, 12],
             analog_servo_pins: [9, 10],
-            analog_pin_state: [strings.menus.analog_pin_state['read'], strings.menus.analog_pin_state['servo']],
-            digital: [strings.menus.digital['on'], strings.menus.digital['off']],
-            axis: ['X', 'Y', 'Z']
+            analog_pin_state: [strings.menus.analog_pin_state['read'], strings.menus.analog_pin_state['servo']]
         }
     }];
 
+	
+	// Level 0 is the root level
+	var blocks = levels[0].blocks;
+	var menus = levels[0].menus;
+	 
 
-    var currentLevel = levels[level_param - 1];
+    if(level_param > 1){
+    	blocks = blocks.concat(levels[level_param - 1].blocks);
+    	menus = menus.concat(levels[level_param - 1].menus);
+    }
 
 
     var descriptor = {
-        blocks: currentLevel.blocks,
-        menus: currentLevel.menus,
+        blocks: blocks,
+        menus: menus,
         url: 'http://www.embeditelectronics.com/blog/learn/'
     };
 
