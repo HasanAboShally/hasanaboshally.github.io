@@ -314,6 +314,41 @@
                     }
                 }
             ]
+        },
+
+        ar: {
+            levels: [
+                {
+                    blocks: {
+                        whenButtonPressed: ‘عند ضغط الكبسة %m.buttons',
+                        isButtonPressed: ‘هل الكبسة %m.buttons مضغوطة?’,
+                        getSwitch: ‘المفتاح?’,
+                        setNeopixelColor: ‘ غير لون اللامبة %n to %c',
+                        setNeopixelRGB: ’غير لون اللامبة led %n to ( R:%n , G:%n , B:%n )',
+                        turnLedOff: ‘اطفئ اللامبة %n',
+                        turnAllLedsOff: ‘اطفئ جميع اللامبات’,
+                        getAcc: ‘حسّاس التسارع %m.axis',
+                        getLoudness: ‘الصّوت’,
+                        getBrightness: ‘الإضاءة’,
+                        getTemperature: ‘درجة  الحرارة’,
+                        isShaking: ‘اهتزاز?’,
+                        whenShaking: ‘عند الاهتزاز’
+                    },
+                    menus: {
+                        digital: {on: 'on', off: 'off'}
+                    }
+                },
+                {
+                    blocks: {
+                        setAnalogPinRW: 'setup pin %m.analog_servo_pins to %m.analog_pin_state',
+                        readAnalog: 'analog pin %m.analog_pins',
+                        setServo: 'set servo on pin %m.analog_servo_pins to angle %n'
+                    },
+                    menus: {
+                        analog_pin_state: {read: 'read', servo: 'servo'},
+                    }
+                }
+            ]
         }
 
     };
