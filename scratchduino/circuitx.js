@@ -333,9 +333,7 @@
     if(current_level_index > 0){
     	Object.assign(strings.blocks, LOCALIZATION_STRINGS[lang_param].levels[current_level_index].blocks);
     	Object.assign(strings.menus, LOCALIZATION_STRINGS[lang_param].levels[current_level_index].menus);
-
     }
-
 
 
     var levels = [{
