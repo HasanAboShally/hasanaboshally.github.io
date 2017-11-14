@@ -335,7 +335,8 @@
                         whenShaking: 'ar - when shaking'
                     },
                     menus: {
-                        digital: {on: 'on', off: 'off'}
+                        digital: {on: 'on', off: 'off'},
+                        analog_pin_state: {read: 'read', servo: 'servo'}, //Todo: remove from here and fix 402 - strings.menus.analog_pin_state['read']
                     }
                 },
                 {
