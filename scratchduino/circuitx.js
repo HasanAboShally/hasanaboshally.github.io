@@ -336,7 +336,6 @@
                     },
                     menus: {
                         digital: {on: 'on', off: 'off'},
-                        analog_pin_state: {read: 'read', servo: 'servo'}, //Todo: remove from here and fix 402 - strings.menus.analog_pin_state['read']
                     }
                 },
                 {
@@ -388,11 +387,12 @@
     }];
 
 
+    // Add the translations of the level blocks
     if(current_level_index > 0){
         Object.assign(strings.blocks, LOCALIZATION_STRINGS[lang_param].levels[current_level_index].blocks);
         Object.assign(strings.menus, LOCALIZATION_STRINGS[lang_param].levels[current_level_index].menus);
     }
-    
+
     // Add the additonal blocks of the selected level
     switch(current_level_index){
         case 1:{
