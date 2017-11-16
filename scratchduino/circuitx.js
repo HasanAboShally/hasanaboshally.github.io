@@ -362,12 +362,8 @@
 
     var strings = LOCALIZATION_STRINGS[lang_param].levels[0];
 
-    if(current_level_index > 0){
-    	Object.assign(strings.blocks, LOCALIZATION_STRINGS[lang_param].levels[current_level_index].blocks);
-    	Object.assign(strings.menus, LOCALIZATION_STRINGS[lang_param].levels[current_level_index].menus);
-    }
 
-
+    // Add the base blocks (level 0)
     var levels = [{
         blocks: [
             ['h', strings.blocks["whenButtonPressed"], 'isButtonPressed', 1],
@@ -389,19 +385,32 @@
             digital: [strings.menus.digital['on'], strings.menus.digital['off']],
             axis: ['X', 'Y', 'Z']
         }
-    },
-    {
-        blocks: [
-            [' ', strings.blocks["setAnalogPinRW"], 'setAnalogPinRW', 9, 'servo'],
-            ['r', strings.blocks["readAnalog"], 'readAnalog', 9],
-            [' ', strings.blocks["setServo"], 'setServo', 9, 90]
-        ],
-        menus: {
-            analog_pins: [9, 10, 12],
-            analog_servo_pins: [9, 10],
-            analog_pin_state: [strings.menus.analog_pin_state['read'], strings.menus.analog_pin_state['servo']]
-        }
     }];
+
+
+    if(current_level_index > 0){
+        Object.assign(strings.blocks, LOCALIZATION_STRINGS[lang_param].levels[current_level_index].blocks);
+        Object.assign(strings.menus, LOCALIZATION_STRINGS[lang_param].levels[current_level_index].menus);
+    }
+    
+    // Add the additonal blocks of the selected level
+    switch(current_level_index){
+        case 1:{
+            levels.push({
+                blocks: [
+                    [' ', strings.blocks["setAnalogPinRW"], 'setAnalogPinRW', 9, 'servo'],
+                    ['r', strings.blocks["readAnalog"], 'readAnalog', 9],
+                    [' ', strings.blocks["setServo"], 'setServo', 9, 90]
+                ],
+                menus: {
+                    analog_pins: [9, 10, 12],
+                    analog_servo_pins: [9, 10],
+                    analog_pin_state: [strings.menus.analog_pin_state['read'], strings.menus.analog_pin_state['servo']]
+                }
+             });
+        }
+        break;
+    }
 
 	
 	// Level 0 is the root level
