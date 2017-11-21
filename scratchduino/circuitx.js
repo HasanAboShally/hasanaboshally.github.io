@@ -357,7 +357,7 @@
     var level_param = (new URLSearchParams(window.location.search)).get('level') || 1;
     var lang_param = (new URLSearchParams(window.location.search)).get('lang') || 'en';
 
-    document.title = "ScratchDuino - Level #" + level_param;
+    document.title = "Scratchduino - Level #" + level_param;
 
 
     var current_level_index = level_param - 1; // Root level is 0
