@@ -12,14 +12,14 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
-	<body class="is-preload" data-tilt style="transform-style: preserve-3d">
+	<body class="is-preload"  style="transform-style: preserve-3d"  data-tilt>
 
 		<!-- Wrapper -->
-			<div id="wrapper">
+			<div id="wrapper"  >
 
 				<!-- Main -->
 					<section id="main" style="transform: translateZ(20px)" >
-						<header>
+						<header >
 							<span class="avatar"><img src="images/avatar.jpg" alt=""  /></span>
 							<h1>Hasan Abo-Shally</h1>
 							<p>Multidisciplinary | Forbes Under 30</p>
@@ -89,8 +89,22 @@
 					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
 				}
 			</script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js" integrity="sha256-aVHuwKjAybLqtyxPV5dl4PGQFlgikZ3ceRuzkQlv18A=" crossorigin="anonymous"></script>	
+			<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/universal-tilt.js@2.0.6/lib/universal-tilt.min.js" ></script>
+
+			<script type="text/javascript">
+
+				// $('body').universalTilt({
+				//   settings: {
+				//     // options...
+				//   },
+				//   callbacks: {
+				//     // callbacks...
+				//   }
+				// });
+
+			</script>>
+
 	</body>
 </html>
