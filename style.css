@@ -242,13 +242,24 @@ section > header {
   font-size: 100%;
   color:black;
 
-  background-color: #ffd500;
+  /* background-color: #ffd500; */
   outline:none;
   padding: 10px 40px;
   font-weight: bold;
   text-decoration: none;
   margin: 40px auto;
   cursor: pointer;
+
+  box-shadow: 2px 8px 4px -6px rgba(0, 0, 0, 0.3);
+
+
+}
+
+
+body>footer{
+  margin-top: 20px;
+  padding: 10px 0;
+  color:gray;
 }
 
 @media (max-width: 576px) {
