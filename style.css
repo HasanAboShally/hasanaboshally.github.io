@@ -132,6 +132,39 @@ body {
   align-self: center;
 }
 
+
+.initiative{
+    margin-top: 20px;
+}
+
+.initiative:hover{
+      box-shadow: 20px 38px 34px -26px rgba(0, 0, 0, 0.2);
+}
+
+.initiative .content {
+  padding: 20px;
+  text-align: center;
+  
+    
+}
+
+.initiative img{
+    display: block;
+    margin: 0 auto 20px auto;
+    max-width:   100%;
+    width: 80%;
+    filter:grayscale(0.25) brightness(0.75) 
+}
+
+.initiative .btn{
+zoom:0.75;    
+}
+
+.initiative .title {
+    font-weight: bold;
+}
+
+
 #projects {
   margin-top: 50px;
 }
@@ -150,7 +183,7 @@ body {
   cursor: pointer;
 }
 
-.project a {
+.project a, .initiative a {
   text-decoration: none;
   color: black;
 }
@@ -190,7 +223,7 @@ body {
   text-align: center;
 }
 
-.project .project-name {
+.project .project-name, .initiative .title {
   display: block;
   font-weight: bold;
   text-align: center;
@@ -238,7 +271,7 @@ section > header {
 }
 
 
-#btn-cv{
+.btn{
   font-size: 100%;
   color:black;
 
@@ -247,10 +280,13 @@ section > header {
   padding: 10px 40px;
   font-weight: bold;
   text-decoration: none;
-  margin: 40px auto;
   cursor: pointer;
 
-  box-shadow: 2px 8px 4px -6px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 8px 4px -6px rgba(0, 0, 0, 0.3); 
+}
+
+#btn-cv{
+  margin: 40px auto;
 
 
 }
