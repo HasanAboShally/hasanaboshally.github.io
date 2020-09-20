@@ -301,6 +301,11 @@ section > header {
 #media img{
     max-width: 100%;
     filter:grayscale(0.5);
+    display: block;
+}
+
+#media a{
+    padding: 10px;
 }
    
 body>footer{
