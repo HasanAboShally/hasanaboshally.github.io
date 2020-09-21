@@ -19,7 +19,7 @@ body {
   font-family: "Handlee", cursive;
 
   font-size: 100%;
-  line-height: 200%;
+  line-height: 150%;
 }
 
 *::selection {
@@ -153,7 +153,7 @@ body {
     margin: 0 auto 20px auto;
     max-width:   100%;
     width: 80%;
-    filter:grayscale(0.25) brightness(0.75) 
+    filter:grayscale(0.25) brightness(0.75);
 }
 
 .initiative .btn{
@@ -238,7 +238,7 @@ zoom:0.75;
 }
 
 .project .project-short-description {
-  line-height: 100%;
+  line-height: 150%;
 }
 
 .project .hashtags {
