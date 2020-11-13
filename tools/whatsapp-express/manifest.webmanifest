@@ -1,0 +1,15 @@
+{
+    "background_color": "white",
+    "description": "Directly send Whatsapp messages to peple who are not in your contact list",
+    "display": "fullscreen",
+    "icons": [
+      {
+        "src": "icon-sm.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ],
+    "name": "Whatsapp Direct",
+    "short_name": "WD",
+    "start_url": "index.html"
+  }

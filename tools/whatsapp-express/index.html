@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Primary Meta Tags -->
+    <title>Whatsapp Express</title>
+    <meta name="title" content="Whatsapp Express">
+    <meta name="author" content="Hasan Abo-Shally">
+    <meta name="description" content="Quickly send Whatsapp messages to anyone.">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- <link rel="manifest" href="manifest.webmanifest"> -->
+    <link rel="icon" type="image/png" href="icon.png" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hasan.life/tools/whatsapp-express">
+    <meta property="og:title" content="Whatsapp Express">
+    <meta property="og:description"
+        content="Quickly send Whatsapp messages to anyone.">
+    <meta name="image" property="og:image" content="https://hasan.life/images/preview.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://hasan.life/tools/whatsapp-express">
+    <meta property="twitter:title" content="Whatsapp Express">
+    <meta property="twitter:description"
+        content="Quickly send Whatsapp messages to anyone.">
+    <meta property="twitter:image" content="images/hasan-drawing.jpg">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+
+    <link rel="stylesheet" href="intlTelInput/css/intlTelInput.css">
+
+    <style>
+        body {
+            padding: 50px;
+            border-top: 10px solid #25D366;
+        }
+
+        .center-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        body>footer {
+            color:black;
+            margin-top: 50px;
+            font-size: 80%;
+            text-align: center;
+        }
+
+        body>footer small {
+            margin-top: 20px;
+        }
+
+        header{
+            margin-bottom: 50px;
+            /* font-weight: l; */
+            text-align: center;
+        }
+        header>*{
+            display: block;
+        }
+
+        h1 {
+            color: #25D366;
+            text-align: center;
+        }
+
+        #submit-btn {
+            background: #25D366;
+            color: white;
+            margin-top: 10px;
+        }
+
+        form span{
+            color: lightgrey;
+            margin-top: 10px;
+            font-size: 80%;
+            text-align: center;
+        }
+
+        input::placeholder {
+            color: #ccc !important;
+        }
+    </style>
+
+    <!-- <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript> -->
+</head>
+
+<body class="is-preload">
+
+    <header >
+        <h1>Whatsapp Express</h1>
+        <label>Send Whatsapp messages to anyone.</label>
+    </header>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+
+                <form id="form" class="center-center">
+                    <input inputmode="numeric" pattern="[0-9]*" class="form-control" type="tel" id="phone"
+                        placeholder="0524261932">
+
+                    <button id="submit-btn" type="submit" class="btn btn-block">Contact</button>
+                     <span>Phone numbers entered are NEVER stored or shared with third parties.</span>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer class="center-center">
+        <small style="color:gray"> This website is not affiliated with or endorsed by Facebook or the offical Whatsapp app.</small>
+
+        <small>Build with ❤</br>By: <a href="https://hasan.life">Hasan Abo-Shally</a></small>
+
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="intlTelInput/js/intlTelInput.js"></script>
+    <script src="intlTelInput/js/utils.js"></script>
+    <script>
+
+        var input = document.querySelector("#phone");
+
+        var iti = window.intlTelInput(input, {
+            initialCountry: "auto",
+            geoIpLookup: function (callback) {
+                jQuery.get('https://ipinfo.io?token=5a40a68b620b7c', function () { }, "jsonp").always(function (resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "us";
+                    callback(countryCode);
+                });
+            },
+            utilsScript: "intlTelInput/js/utils.js" // just for formatting/placeholders etc
+        });
+
+        $("#form").submit(function (event) {
+            event.preventDefault();
+            var number = iti.getNumber().substring(1); // remove the +;
+            window.location.replace("https://wa.me/" + number);
+            return false;
+        });
+
+
+        input.focus();
+        input.select();
+
+    </script>
+
+
+    <!-- <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('sw.js')
+                .then(function () { console.log("Service Worker Registered"); });
+        }
+    </script>
+
+
+
+    <script>
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Step 1: Save the event
+            let triggerEvent = e;
+            // Step 2: Trigger the UI for Install prompt
+            this.showPromptToInstall = true;
+        });
+
+
+        installprompt.addEventListener('click', (e) => {
+            triggerEvent.prompt();
+            //user response
+            triggerEvent.userChoice.then((response) => {
+                if (response.outcome === 'accepted') {
+                    console.log('yes, please install');
+                    
+                    // triggerEvent = null;
+                } else {
+                    console.log('No thanks, I am good!');
+                }
+            });
+        });
+
+
+    </script> -->
+
+
+
+
+
+</body>
+
+</html>
