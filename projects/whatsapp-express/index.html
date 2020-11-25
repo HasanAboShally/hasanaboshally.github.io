@@ -34,6 +34,9 @@
 
     <link rel="stylesheet" href="intlTelInput/css/intlTelInput.css">
 
+    <link rel="manifest" href="manifest.json">
+
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J2DTVCR64R"></script>
     <script>
@@ -119,8 +122,13 @@
             <div class="col-md-6 offset-md-3">
 
                 <form id="form" class="center-center">
-                    <input inputmode="numeric" pattern="[0-9]*" class="form-control" type="tel" id="phone"
-                        placeholder="0523456789">
+                    <div class="form-group">
+                        <label>Sent to:</label>
+                        <input inputmode="numeric" pattern="[0-9]*" class="form-control" type="tel" id="phone"
+                            placeholder="0523456789">
+                    </div>
+
+
 
                     <button id="submit-btn" type="submit" class="btn btn-block">Contact</button>
                     <span>Phone numbers entered are NEVER stored or shared with third parties.</span>
@@ -140,11 +148,10 @@
 
         <a href="https://molhamteam.com/" target="blank">
 
-           
+
             <span style="display:block;text-align: center; margin: 10px auto;">Donate to help Syrian refugee kids</span>
 
-            <img style="max-width: 75%; display: block; margin:0 auto; max-height: 200px;"
-                src="https://scontent.fsdv1-2.fna.fbcdn.net/v/t1.0-9/124577549_4582990435109641_234891069059684649_o.jpg?_nc_cat=108&ccb=2&_nc_sid=730e14&_nc_ohc=xHUYK8lUcUoAX_AcWL1&_nc_ht=scontent.fsdv1-2.fna&oh=49cea7f0c3472d98f413244bc2e81a11&oe=5FD90707" />
+            <img style="max-width: 75%; display: block; margin:0 auto; max-height: 200px;" src="molham.jpg" />
         </a>
     </footer>
 
@@ -182,43 +189,17 @@
 
     </script>
 
-
-    <!-- <script>
+    <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker
-                .register('sw.js')
-                .then(function () { console.log("Service Worker Registered"); });
+            console.log("Will the service worker register?");
+            navigator.serviceWorker.register('service-worker.js')
+                .then(function (reg) {
+                    console.log("Yes, it did.");
+                }).catch(function (err) {
+                    console.log("No it didn't. This happened:", err)
+                });
         }
     </script>
-
-
-
-    <script>
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Step 1: Save the event
-            let triggerEvent = e;
-            // Step 2: Trigger the UI for Install prompt
-            this.showPromptToInstall = true;
-        });
-
-
-        installprompt.addEventListener('click', (e) => {
-            triggerEvent.prompt();
-            //user response
-            triggerEvent.userChoice.then((response) => {
-                if (response.outcome === 'accepted') {
-                    console.log('yes, please install');
-                    
-                    // triggerEvent = null;
-                } else {
-                    console.log('No thanks, I am good!');
-                }
-            });
-        });
-
-
-    </script> -->
 
 </body>
 
