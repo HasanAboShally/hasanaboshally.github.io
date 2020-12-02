@@ -161,15 +161,47 @@
     <script src="intlTelInput/js/utils.js"></script>
     <script>
 
+        async function getClipboardContents() {
+            try {
+                const text = await navigator.clipboard.readText();
+                return text;
+            } catch (err) {
+                console.error('Failed to read clipboard contents: ', err);
+            }
+        }
+
+        function pasteText(clipText) {
+
+            // [todo: use isValidNumber?]
+
+            var hasNumber = /\d/;
+            if (typeof clipText == "string" && clipText.length <20 && hasNumber.test(clipText)) {
+
+                var number = clipText.replace(/-|\s/g, "");
+
+                if (!(number.startsWith("+") || number.startsWith("00"))) {
+                    var dialCode = iti.getSelectedCountryData().dialCode;
+                    number = dialCode + number;
+                }
+
+                iti.setNumber(number);
+            }
+        }
+
+
         var input = document.querySelector("#phone");
 
         var iti = window.intlTelInput(input, {
             initialCountry: "auto",
             geoIpLookup: function (callback) {
-                jQuery.get('https://ipinfo.io?token=5a40a68b620b7c', function () { }, "jsonp").always(function (resp) {
-                    var countryCode = (resp && resp.country) ? resp.country : "us";
-                    callback(countryCode);
-                });
+                jQuery.get('https://ipinfo.io?token=5a40a68b620b7c', function () { }, "jsonp")
+                    .always(function (resp) {
+                        var countryCode = (resp && resp.country) ? resp.country : "IL";
+                        callback(countryCode);
+                    })
+                    .then(function () {
+                        getClipboardContents().then(clipText => pasteText(clipText));
+                    });
             },
             utilsScript: "intlTelInput/js/utils.js" // just for formatting/placeholders etc
         });
@@ -201,30 +233,6 @@
     </script>
 
 
-    <script>
-        async function getClipboardContents() {
-            try {
-                const text = await navigator.clipboard.readText();
-                return text;
-            } catch (err) {
-                console.error('Failed to read clipboard contents: ', err);
-            }
-        }
-
-        function pasteText(clipText) {
-            
-            var hasNumber = /\d/;
-            if (hasNumber.test(clipText)) {
-                $(input).val(clipText.replace(/-|\s/g,""));
-            }
-        }
-
-
-        getClipboardContents().then(clipText => pasteText(clipText));
-
-
-
-    </script>
 
 </body>
 
