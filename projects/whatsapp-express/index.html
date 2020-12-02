@@ -34,8 +34,7 @@
 
     <link rel="stylesheet" href="intlTelInput/css/intlTelInput.css">
 
-    <link rel="manifest" href="manifest.json">
-
+    <link rel="manifest" href="manifest.webmanifest">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J2DTVCR64R"></script>
@@ -199,6 +198,32 @@
                     console.log("No it didn't. This happened:", err)
                 });
         }
+    </script>
+
+
+    <script>
+        async function getClipboardContents() {
+            try {
+                const text = await navigator.clipboard.readText();
+                return text;
+            } catch (err) {
+                console.error('Failed to read clipboard contents: ', err);
+            }
+        }
+
+        function pasteText(clipText) {
+            
+            var hasNumber = /\d/;
+            if (hasNumber.test(clipText)) {
+                $(input).val(clipText.replace(/-|\s/g,""));
+            }
+        }
+
+
+        getClipboardContents().then(clipText => pasteText(clipText));
+
+
+
     </script>
 
 </body>
